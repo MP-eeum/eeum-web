@@ -1,0 +1,6 @@
+.App {
+  width: 24rem;
+  min-height: 100vh;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 30px -5px;
+  overflow: hidden;
+}
