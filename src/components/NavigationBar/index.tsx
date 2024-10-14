@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import icn_news from "../../assets/svgs/icn_news.svg";
 import icn_news_off from "../../assets/svgs/icn_news_off.svg";
 import icn_weather from "../../assets/svgs/icn_weather.svg";
@@ -12,26 +13,59 @@ import icn_megaphone_off from "../../assets/svgs/icn_megaphone_off.svg";
 
 export default function NavigationBar() {
   const buttons = [
-    { name: "재난뉴스", imageOn: icn_news, imageOff: icn_news_off },
-    { name: "기상정보", imageOn: icn_weather, imageOff: icn_weather_off },
-    { name: "홈", imageOn: icn_home, imageOff: icn_home_off },
-    { name: "긴급상황", imageOn: icn_emergency, imageOff: icn_emergency_off },
-    { name: "대피요령", imageOn: icn_megaphone, imageOff: icn_megaphone_off },
+    { id: "news", name: "재난뉴스", imageOn: icn_news, imageOff: icn_news_off },
+    {
+      id: "weather",
+      name: "기상정보",
+      imageOn: icn_weather,
+      imageOff: icn_weather_off,
+    },
+    { id: "home", name: "홈", imageOn: icn_home, imageOff: icn_home_off },
+    {
+      id: "disaster",
+      name: "긴급상황",
+      imageOn: icn_emergency,
+      imageOff: icn_emergency_off,
+    },
+    {
+      id: "evacuation",
+      name: "대피요령",
+      imageOn: icn_megaphone,
+      imageOff: icn_megaphone_off,
+    },
   ];
 
-  const [current, setCurrent] = useState();
+  const navigation = useNavigate();
+  const [current, setCurrent] = useState("");
+
+  useEffect(() => {
+    const path = window.location.pathname.split("/")[1];
+    path !== "" ? setCurrent(path) : setCurrent("home");
+  }, []);
+
+  const onClickBtn = (id: string) => {
+    setCurrent(id);
+    navigation(`/${id !== "home" ? id : ""}`);
+  };
+
   return (
-    <div className="w-96 flex justify-around fixed bottom-0 border-t h-20">
+    <div className="fixed bottom-0 z-30 flex items-center justify-around h-20 px-5 bg-white border-t w-96 border-lightgray">
       {buttons.map((item) => (
         <div
-          key={item.name}
-          className="w-16 flex flex-col items-center justify-center gap-1"
+          key={item.id}
+          className="flex flex-col items-center justify-center w-16 gap-3 cursor-pointer select-none"
+          onClick={() => onClickBtn(item.id)}
         >
           <img
+            className="w-5 h-5"
             alt={item.name}
-            src={current === item.name ? item.imageOn : item.imageOff}
+            src={current === item.id ? item.imageOn : item.imageOff}
           />
-          <div>{item.name}</div>
+          <div
+            className={`text-sm ${current === item.id ? "text-primary" : "text-lightgray"}`}
+          >
+            {item.name}
+          </div>
         </div>
       ))}
     </div>
