@@ -4,3 +4,14 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 30px -5px;
   overflow: hidden;
 }
+::-webkit-scrollbar {
+  height: 0;
+  width: 1rem;
+}
+::-webkit-scrollbar-thumb {
+  background: #b6b6b6;
+  border-radius: 1rem;
+}
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
