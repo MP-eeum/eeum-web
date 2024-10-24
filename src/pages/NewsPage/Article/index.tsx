@@ -1,28 +1,39 @@
-interface Props {
+import ArticleItem from "./ArticleItem";
+
+interface Item {
   title: string;
+  description: string;
   link: string;
+  originallink: string;
   pubDate: string;
 }
 
-export default function Article({ title, link, pubDate }: Props) {
+interface Props {
+  data: Item[];
+  formatText: (link: string) => string;
+  formatDate: (link: string) => string;
+  funcSetDetail: (link: Item) => void;
+}
+export default function Article({
+  data,
+  formatText,
+  formatDate,
+  funcSetDetail,
+}: Props) {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div
-      className="flex items-center justify-between gap-2 py-3 border-b cursor-pointer border-lightgray"
-      onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
-    >
-      <div className="flex flex-col">
-        <div className="flex-1 text-sm font-medium">{title}</div>
-        <div className="flex gap-1 text-xs">
-          <p>작성일:</p>
-          {pubDate}
-        </div>
-      </div>
-      <div className="flex justify-end text-white w-fit">
-        {today === pubDate && (
-          <div className="px-2 text-xs bg-primary rounded-xl">NEW</div>
-        )}
+    <div className="mx-8">
+      <div>뉴스 살펴보기</div>
+      <div className="flex flex-col ">
+        {data.map((item: any) => (
+          <div key={item.link} onClick={() => funcSetDetail(item)}>
+            <ArticleItem
+              title={formatText(item.title)}
+              pubDate={formatDate(item.pubDate)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

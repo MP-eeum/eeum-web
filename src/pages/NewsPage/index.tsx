@@ -4,23 +4,29 @@ import icn_search from "../../assets/svgs/icn_search.svg";
 import Header from "../../components/Header";
 import Article from "./Article";
 import Urgent from "./Urgent";
+import Detail from "./Detail";
 
 interface Item {
-  title: any;
-  [key: string]: any;
+  title: string;
+  description: string;
+  link: string;
+  originallink: string;
+  pubDate: string;
 }
 
 export default function NewsPage() {
   const [data, setData] = useState<Item[]>([]);
-  const [urgent, setUrgent] = useState<Item[]>([]);
+  const [urgents, setUrgents] = useState<Item[]>();
   const [articles, setArticles] = useState<Item[]>([]);
+  const [detail, setDetail] = useState<Item>();
+  const [showDetail, setShowDetail] = useState(false);
 
   useEffect(() => {
     getNewsData();
   }, []);
 
   useEffect(() => {
-    setUrgent(
+    setUrgents(
       data
         .filter((item) => item.title.includes("[속보]"))
         .map((item) => ({
@@ -65,51 +71,50 @@ export default function NewsPage() {
     return date.toISOString().split("T")[0];
   };
 
+  const funcSetDetail = (input: Item) => {
+    setShowDetail(!showDetail);
+    setDetail(input);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="h-12">
         <Header
           title="재난뉴스"
           button={
-            <img
-              className="w-6 h-6 cursor-pointer"
-              alt="search"
-              src={icn_search}
-            />
+            // showDetail ? null : (
+            //   <img
+            //     className="w-6 h-6 cursor-pointer"
+            //     alt="search"
+            //     src={icn_search}
+            //   />
+            // )
+            null
           }
         />
       </div>
-      <div className="flex flex-col gap-5 py-4">
-        <div className="mx-8">긴급 속보</div>
-        <div className="flex items-center w-full gap-6 ml-8 overflow-x-auto">
-          {urgent.length > 0 ? (
-            urgent.map((item: any) => (
-              <Urgent
-                key={item.link}
-                title={formatText(item.title)}
-                link={item.link}
-                pubDate={formatDate(item.pubDate)}
-              />
-            ))
-          ) : (
-            <p className="w-full text-center">현재 속보가 없습니다</p>
+      {showDetail && detail ? (
+        <Detail data={detail} funcSetDetail={funcSetDetail} />
+      ) : (
+        <div className="flex flex-col gap-5 py-4">
+          {urgents && (
+            <Urgent
+              data={urgents}
+              formatText={formatText}
+              formatDate={formatDate}
+              funcSetDetail={funcSetDetail}
+            />
+          )}
+          {articles && (
+            <Article
+              data={articles}
+              formatText={formatText}
+              formatDate={formatDate}
+              funcSetDetail={funcSetDetail}
+            />
           )}
         </div>
-        <div className="flex justify-between mx-8">
-          <div>뉴스 살펴보기</div> <div>등록순</div>
-        </div>
-        <div className="flex flex-col mx-8">
-          {articles.length > 0 &&
-            articles.map((item: any) => (
-              <Article
-                key={item.link}
-                title={formatText(item.title)}
-                link={item.link}
-                pubDate={formatDate(item.pubDate)}
-              />
-            ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }
