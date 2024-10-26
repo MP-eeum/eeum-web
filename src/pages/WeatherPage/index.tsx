@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "../../components/Header";
 import DayOverview from "./DayOverview";
 import CurrentWeather from "./CurrentWeather";
+import AirCondition from "./AirCondition";
 
 interface Item {
   [key: string]: string;
@@ -18,10 +19,11 @@ interface ItemOverview {
 export default function WeatherPage() {
   const url_weather = "VilageFcstInfoService_2.0/getVilageFcst";
   const url_uv = "LivingWthrIdxServiceV4/getUVIdxV4";
+  const url_air = "LivingWthrIdxServiceV4/getAirDiffusionIdxV4";
+
   const [overData, setOverData] = useState<ItemOverview>();
+  const [airCondition, setAirCondition] = useState(0);
   const today = new Date();
-  const yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(getWeatherData);
@@ -68,6 +70,10 @@ export default function WeatherPage() {
       `http://apis.data.go.kr/1360000/${url_uv}`,
       options2
     );
+    const airRes = await axios.get(
+      `http://apis.data.go.kr/1360000/${url_air}`,
+      options2
+    );
 
     setOverData({
       lowest: weatherRes.data.response.body.items.item.filter(
@@ -88,6 +94,11 @@ export default function WeatherPage() {
           item.fcstTime === `${today.getHours()}00`
       )[0].fcstValue,
     });
+    setAirCondition(
+      airRes.data.response.body.items.item[0][
+        `h${Math.floor(today.getHours() / 3) * 3}`
+      ]
+    );
   };
 
   return (
@@ -99,10 +110,7 @@ export default function WeatherPage() {
       <div className="flex flex-col gap-6 mx-6 text-sm">
         {overData && <DayOverview data={overData} />}
         <div className="flex h-24 gap-1 px-5 py-4 border rounded-lg border-lightgray"></div>
-        <div className="flex flex-col gap-3 px-5 py-4 border rounded-lg border-lightgray">
-          <div className="font-semibold">대기질 41 좋음</div>
-          <div className="w-full h-5 rounded-xl bg-lightgray"></div>
-        </div>
+        <AirCondition data={airCondition} />
       </div>
     </div>
   );
