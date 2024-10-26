@@ -10,7 +10,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="h-full pb-20 App">
+    <div className="h-full pb-20 select-none App">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/news" element={<NewsPage />} />

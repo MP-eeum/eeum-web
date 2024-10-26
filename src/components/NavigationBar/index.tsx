@@ -53,7 +53,7 @@ export default function NavigationBar() {
       {buttons.map((item) => (
         <div
           key={item.id}
-          className="flex flex-col items-center justify-center w-16 gap-3 cursor-pointer select-none"
+          className="flex flex-col items-center justify-center w-16 gap-3 cursor-pointer"
           onClick={() => onClickBtn(item.id)}
         >
           <img
