@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 interface ItemOverview {
   lowest: number;
   highest: number;
@@ -5,36 +7,69 @@ interface ItemOverview {
   rainfall: number;
 }
 
+interface Item {
+  [key: string]: string;
+}
 interface Props {
-  data: ItemOverview;
+  data: Item[];
+  uv: Item[];
+  today: Date;
+  formatDate: (link: Date) => string;
 }
 
-export default function DayOverview({ data }: Props) {
+export default function DayOverview({ data, uv, today, formatDate }: Props) {
+  const [state, setState] = useState({
+    tmx: "",
+    tmn: "",
+    uv: "",
+    rainfall: "",
+  });
+
   const getUVstate = () => {
-    if (data.uv < 3) return "낮음";
-    else if (data.uv < 6) return "보통";
-    else if (data.uv < 8) return "높음";
-    else if (data.uv < 11) return "매우높음";
+    if (state.uv < "3") return "낮음";
+    else if (state.uv < "6") return "보통";
+    else if (state.uv < "8") return "높음";
+    else if (state.uv < "11") return "매우높음";
     else return "위험";
   };
+
+  useEffect(() => {
+    const filteredData = data.filter(
+      (item: Item) =>
+        (item.category === "TMN" ||
+          item.category === "TMX" ||
+          (item.category === "POP" &&
+            item.fcstTime === `${today.getHours()}00`)) &&
+        item.fcstDate === formatDate(today)
+    );
+    setState({
+      tmn: filteredData.filter((item: Item) => item.category === "TMN")[0]
+        .fcstValue,
+      tmx: filteredData.filter((item: Item) => item.category === "TMX")[0]
+        .fcstValue,
+      uv: uv[0][`h${Math.floor(today.getHours() / 3) * 3}`],
+      rainfall: filteredData.filter((item: Item) => item.category === "POP")[0]
+        .fcstValue,
+    });
+  }, []);
 
   return (
     <div className="flex justify-between px-5 py-4 border rounded-lg border-lightgray">
       <div className="flex flex-col items-center gap-3">
         <div className="font-semibold">최저온도</div>
-        {data.lowest}º
+        {state.tmn}º
       </div>
       <div className="flex flex-col items-center gap-3">
         <div className="font-semibold">최고온도</div>
-        {data.highest}º
+        {state.tmx}º
       </div>
       <div className="flex flex-col items-center gap-3">
         <div className="font-semibold">강수확률</div>
-        {data.rainfall}%
+        {state.rainfall}%
       </div>
       <div className="flex flex-col items-center gap-3">
         <div className="font-semibold">자외선지수</div>
-        {data.uv}({getUVstate()})
+        {state.uv}({getUVstate()})
       </div>
     </div>
   );

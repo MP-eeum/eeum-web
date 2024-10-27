@@ -10,31 +10,18 @@ interface Item {
   [key: string]: string;
 }
 
-interface ItemOverview {
-  lowest: number;
-  highest: number;
-  uv: number;
-  rainfall: number;
-}
-
 export default function WeatherPage() {
   const url_weather = "VilageFcstInfoService_2.0/getVilageFcst";
   const url_uv = "LivingWthrIdxServiceV4/getUVIdxV4";
   const url_air = "LivingWthrIdxServiceV4/getAirDiffusionIdxV4";
 
-  const [overData, setOverData] = useState<ItemOverview>();
-  const [hourlyData, setHourlyData] = useState([]);
-  const [airCondition, setAirCondition] = useState();
   const today = new Date();
   const yesterday = new Date();
 
   useEffect(() => {
     yesterday.setDate(today.getDate() - 1);
-    // navigator.geolocation.getCurrentPosition(getWeatherData);
     getWeatherData();
   }, []);
-
-  useEffect(() => {});
 
   const formatDate = (date: Date): string => {
     const year = date.getFullYear().toString();
@@ -43,9 +30,11 @@ export default function WeatherPage() {
     return `${year}${month}${day}`;
   };
 
+  const [weatherData, setWeatherData] = useState<Item[]>([]);
+  const [uvData, setUvData] = useState<Item[]>([]);
+  const [airData, setAirData] = useState<Item[]>([]);
+
   const getWeatherData = async () => {
-    // const lat = Math.floor(position.coords.latitude);
-    // const lng = Math.floor(position.coords.longitude);
     const options1 = {
       params: {
         serviceKey: process.env.REACT_APP_DECODE,
@@ -69,83 +58,48 @@ export default function WeatherPage() {
       },
     };
     try {
-      const weatherRes = await axios.get(
+      const res1 = await axios.get(
         `http://apis.data.go.kr/1360000/${url_weather}`,
         options1
       );
-      const uvRes = await axios.get(
+      const res2 = await axios.get(
         `http://apis.data.go.kr/1360000/${url_uv}`,
         options2
       );
-      const airRes = await axios.get(
+      const res3 = await axios.get(
         `http://apis.data.go.kr/1360000/${url_air}`,
         options2
       );
 
-      const weatherData = weatherRes.data.response.body.items.item;
-      const UVData = uvRes.data.response.body.items.item;
-      const airData = airRes.data.response.body.items.item;
-
-      setOverData({
-        lowest: weatherData.filter(
-          (item: Item) =>
-            item.category === "TMN" && item.fcstDate === formatDate(today)
-        )[0].fcstValue,
-        highest: weatherData.filter(
-          (item: Item) =>
-            item.category === "TMX" && item.fcstDate === formatDate(today)
-        )[0].fcstValue,
-        uv: UVData[0][`h${Math.floor(today.getHours() / 3) * 3}`],
-        rainfall: weatherData.filter(
-          (item: Item) =>
-            item.category === "POP" &&
-            item.fcstDate === formatDate(today) &&
-            item.fcstTime === `${today.getHours()}00`
-        )[0].fcstValue,
-      });
-      const index = weatherData
-        .filter(
-          (item: Item) =>
-            item.category === "TMP" ||
-            item.category === "PTY" ||
-            item.category === "SKY"
-        )
-        .findIndex(
-          (item: Item) =>
-            item.category === "TMP" && item.fcstTime === `${today.getHours()}00`
-        );
-      setHourlyData(
-        weatherData
-          .filter(
-            (item: Item) =>
-              item.category === "TMP" ||
-              item.category === "PTY" ||
-              item.category === "SKY"
-          )
-          .slice(index, index + 72)
-      );
-      setAirCondition(airData[0][`h${Math.floor(today.getHours() / 3) * 3}`]);
+      setWeatherData(res1.data.response.body.items.item);
+      setUvData(res2.data.response.body.items.item);
+      setAirData(res3.data.response.body.items.item);
     } catch (e) {
       console.log(e);
     }
   };
 
+  if (weatherData.length === 0 || uvData.length === 0 || airData.length === 0)
+    return <div>loading</div>;
   return (
     <div className="flex flex-col w-full">
       <div className="h-12">
         <Header title="기상정보" button={null} />
       </div>
-      {hourlyData && (
-        <CurrentWeather
-          temp={hourlyData[0]}
-          sky={hourlyData[1]}
-          pty={hourlyData[2]}
-        />
-      )}
+      <CurrentWeather
+        data={weatherData}
+        today={today}
+        formatDate={formatDate}
+      />
       <div className="flex flex-col max-w-full gap-6 mx-6 text-sm">
-        {overData && <DayOverview data={overData} />}
-        {hourlyData && <Hourly data={hourlyData} />}
-        {airCondition && <AirCondition data={airCondition} />}
+        <DayOverview
+          data={weatherData}
+          uv={uvData}
+          today={today}
+          formatDate={formatDate}
+        />
+        <Hourly data={weatherData} today={today} />
+        <AirCondition data={airData} today={today} />
       </div>
     </div>
   );
