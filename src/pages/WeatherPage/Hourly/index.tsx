@@ -25,7 +25,8 @@ export default function Hourly({ data, today }: Props) {
     );
     const index = filteredData.findIndex(
       (item: Item) =>
-        item.category === "TMP" && item.fcstTime === `${today.getHours()}00`
+        item.category === "TMP" &&
+        item.fcstTime === `${String(today.getHours()).padStart(2, "0")}00`
     );
     const slicedData = filteredData.slice(index, index + 72);
     const pairedData = [];

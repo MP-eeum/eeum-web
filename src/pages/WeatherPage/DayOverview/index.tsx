@@ -32,7 +32,8 @@ export default function DayOverview({ data, uv, today, formatDate }: Props) {
         (item.category === "TMN" ||
           item.category === "TMX" ||
           (item.category === "POP" &&
-            item.fcstTime === `${today.getHours()}00`)) &&
+            item.fcstTime ===
+              `${String(today.getHours()).padStart(2, "0")}00`)) &&
         item.fcstDate === formatDate(today)
     );
     setState({

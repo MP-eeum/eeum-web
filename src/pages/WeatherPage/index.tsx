@@ -15,6 +15,10 @@ export default function WeatherPage() {
   const url_uv = "LivingWthrIdxServiceV4/getUVIdxV4";
   const url_air = "LivingWthrIdxServiceV4/getAirDiffusionIdxV4";
 
+  const [weatherData, setWeatherData] = useState<Item[]>([]);
+  const [uvData, setUvData] = useState<Item[]>([]);
+  const [airData, setAirData] = useState<Item[]>([]);
+
   const today = new Date();
   const yesterday = new Date();
 
@@ -29,10 +33,6 @@ export default function WeatherPage() {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}${month}${day}`;
   };
-
-  const [weatherData, setWeatherData] = useState<Item[]>([]);
-  const [uvData, setUvData] = useState<Item[]>([]);
-  const [airData, setAirData] = useState<Item[]>([]);
 
   const getWeatherData = async () => {
     const options1 = {
@@ -78,6 +78,10 @@ export default function WeatherPage() {
       console.log(e);
     }
   };
+
+  useEffect(() => console.log(weatherData), [weatherData]);
+  useEffect(() => console.log(uvData), [uvData]);
+  useEffect(() => console.log(airData), [airData]);
 
   if (weatherData.length === 0 || uvData.length === 0 || airData.length === 0)
     return <div>loading</div>;

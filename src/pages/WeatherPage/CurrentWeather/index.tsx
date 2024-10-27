@@ -29,7 +29,7 @@ export default function CurrentWeather({ data, today, formatDate }: Props) {
           item.category === "PTY" ||
           item.category === "SKY") &&
         item.fcstDate === formatDate(today) &&
-        item.fcstTime === `${today.getHours()}00`
+        item.fcstTime === `${String(today.getHours()).padStart(2, "0")}00`
     );
     setWeather({
       temp: filteredData[0].fcstValue,
