@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
 
-interface ItemOverview {
-  lowest: number;
-  highest: number;
-  uv: number;
-  rainfall: number;
-}
-
 interface Item {
   [key: string]: string;
 }
@@ -56,11 +49,11 @@ export default function DayOverview({ data, uv, today, formatDate }: Props) {
   return (
     <div className="flex justify-between px-5 py-4 border rounded-lg border-lightgray">
       <div className="flex flex-col items-center gap-3">
-        <div className="font-semibold">최저온도</div>
+        <div className="font-semibold">최저기온</div>
         {state.tmn}º
       </div>
       <div className="flex flex-col items-center gap-3">
-        <div className="font-semibold">최고온도</div>
+        <div className="font-semibold">최고기온</div>
         {state.tmx}º
       </div>
       <div className="flex flex-col items-center gap-3">
