@@ -8,6 +8,11 @@ import EvacuationPage from "./pages/EvacuationPage";
 
 import "./App.css";
 
+const script = document.createElement("script");
+script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_MAP_CLIENT}&submodules=geocoder`;
+script.async = true;
+document.head.appendChild(script);
+
 function App() {
   return (
     <div className="h-full pb-20 select-none App">
