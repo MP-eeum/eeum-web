@@ -4,6 +4,9 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 30px -5px;
   overflow: hidden;
 }
+:root {
+  --color--darkgreen: #396951;
+}
 ::-webkit-scrollbar {
   height: 0;
   width: 1rem;

@@ -11,31 +11,15 @@ module.exports = function (app) {
       },
     })
   );
+  // };
+  app.use(
+    "/api2",
+    createProxyMiddleware({
+      target: "https://naveropenapi.apigw.ntruss.com/map-direction",
+      changeOrigin: true,
+      pathRewrite: {
+        "^/api2": "",
+      },
+    })
+  );
 };
-//   app.use(
-//     "/api2",
-//     createProxyMiddleware({
-//       target: "https://openapi.naver.com",
-//       changeOrigin: true,
-//       pathRewrite: {
-//         "^/api2/": "/",
-//       },
-//     })
-//   );
-// };
-
-// const { createProxyMiddleware } = require("http-proxy-middleware");
-
-// module.exports = function (app) {
-//   app.use(
-//     createProxyMiddleware("/api", {
-//       target: "https://openapi.naver.com",
-//       changeOrigin: true,
-//       // 하단 처리는 필수로 해주어야 한다. 아래의 내용이 없으면 url 경로에
-//       // api가 추가되어 경로를 찾을 수 없어진다.
-//       pathRewrite: {
-//         "^/api/": "/",
-//       },
-//     })
-//   );
-// };
