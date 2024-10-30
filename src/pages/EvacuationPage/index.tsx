@@ -17,7 +17,7 @@ export default function EvacuationPage() {
             onClick={() => setCurrent(0)}
           >
             국민행동요령
-          </button>
+          </button> 
         }
         right={
           <button
