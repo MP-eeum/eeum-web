@@ -6,7 +6,6 @@ import Videos from "./Videos";
 
 export default function LandingPage() {
   const url = "WthrWrnInfoService/getWthrPwn";
-  const today = new Date();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col w-full">
-      <Top />
+      <Top data={data} />
       <div className="flex flex-col px-6 py-5 gap-7">
         <ItemBox data={data} />
       </div>
