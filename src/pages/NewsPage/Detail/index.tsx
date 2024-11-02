@@ -38,7 +38,7 @@ export default function Detail({ data, funcSetDetail }: Props) {
         />
       </div>
       <div className="flex flex-col gap-1 pb-4 border-b border-lightgray">
-        <div className="text-base font-bold">{title}</div>
+        <div className="text-base font-bold">{formatText(title)}</div>
         <div>날짜: {formatDate(pubDate)}</div>
       </div>
       <div>{formatText(description)}</div>

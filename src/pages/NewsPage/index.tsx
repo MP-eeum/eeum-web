@@ -27,12 +27,13 @@ export default function NewsPage() {
 
   useEffect(() => {
     setUrgents(
-      data
-        .filter((item) => item.title.includes("[속보]"))
-        .map((item) => ({
-          ...item,
-          title: item.title.replace(/^\[속보\]\s*/, ""),
-        }))
+      data.filter(
+        (item) => item.title.includes("속보") || item.title.includes("긴급")
+      )
+      // .map((item) => ({
+      //   ...item,
+      //   title: item.title.replace(/^\[속보\]\s*/, ""),
+      // }))
     );
     setArticles(data.filter((item) => !item.title.includes("[속보]")));
   }, [data]);
