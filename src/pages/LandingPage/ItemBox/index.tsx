@@ -1,42 +1,59 @@
+import { useEffect, useState } from "react";
 import icn_snow from "../../../assets/svgs/icn_snow.svg";
+import icn_back from "../../../assets/svgs/icn_back.svg";
+import icn_next from "../../../assets/svgs/icn_next.svg";
 
-export default function ItemBox() {
-  const mockdata = [
-    {
-      type: "재난속보",
-      time: "2024-02-16",
-      image: icn_snow,
-      title: "대설 주의보 강설량 15~20cm",
-      loc: ["강원도 강릉시", "강원도 평창시"],
-    },
-    {
-      type: "재난속보",
-      time: "2024-02-16",
-      image: icn_snow,
-      title: "대설 주의보 강설량 15~20cm",
-      loc: ["강원도 강릉시", "강원도 평창시"],
-    },
-  ];
+interface Props {
+  data: any[];
+}
+
+export default function ItemBox({ data }: Props) {
+  const [pwn, setPwn] = useState<any[]>([]);
+
+  useEffect(() => {
+    const result = data.map((item: any) => item.pwn.split("\r\n"));
+    if (result.length === 0) return;
+    const pairedData = [];
+    for (let j = 0; j < result.length; j++) {
+      for (let i = 0; i < result[j].length; i += 2) {
+        const pair = result[j].slice(i, i + 2);
+        const child = {
+          title: pair[0].slice(4),
+          time: pair[1].split(" : ")[0].slice(2),
+          loc: pair[1].split(" : ")[1],
+        };
+        pairedData.push(child);
+      }
+    }
+    setPwn(pairedData);
+  }, [data]);
+
+  if (!pwn) return <div></div>;
   return (
-    <div className="flex border rounded-lg border-lightgray">
-      {mockdata.map((item, index) => (
-        <div key={index} className="flex flex-col min-w-full gap-3 px-5 py-4 ">
-          <div className="flex gap-3 px-4">
-            <div>재난속보</div>|<div>2024-02-16 13:00</div>
-          </div>
-          <div className="flex items-center gap-3">
-            <img className="w-16" alt="weather-image" src={item.image} />
-            <div className="flex flex-col">
-              <div>{item.title}</div>
-              <div className="flex gap-1 text-sm">
-                {item.loc.map((i) => (
-                  <div key={i}>{i}</div>
-                ))}
+    <div className="flex flex-col">
+      <div className="pb-4 font-semibold">재난 속보</div>
+      <div className="relative flex pb-4 border rounded-lg border-lightgray">
+        {pwn.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col min-w-full gap-3 px-10 py-4 "
+          >
+            <div className="flex gap-3 px-4"></div>
+            <div className="flex items-center gap-3">
+              <img className="w-16" alt="weather-image" src={icn_snow} />
+              <div className="flex flex-col">
+                <div>{item.title}</div>
+                <div>{item.time}</div>
+                <div>{item.loc}</div>
               </div>
             </div>
           </div>
+        ))}
+        <div className="absolute flex items-center justify-between w-full h-full px-1">
+          <img className="cursor-pointer" src={icn_back} />
+          <img className="cursor-pointer" src={icn_next} />
         </div>
-      ))}
+      </div>
     </div>
   );
 }

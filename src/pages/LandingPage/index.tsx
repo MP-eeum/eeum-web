@@ -1,14 +1,44 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import ItemBox from "./ItemBox";
 import Top from "./Top";
 import Videos from "./Videos";
 
 export default function LandingPage() {
+  const url = "WthrWrnInfoService/getWthrPwn";
+  const today = new Date();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getWeatherData();
+  }, []);
+
+  const getWeatherData = async () => {
+    const options = {
+      params: {
+        serviceKey: process.env.REACT_APP_DECODE,
+        numOfRows: 1000,
+        pageNo: 1,
+        dataType: "JSON",
+        stnId: 108, //전국
+      },
+    };
+    try {
+      const res = await axios.get(
+        `http://apis.data.go.kr/1360000/${url}`,
+        options
+      );
+      setData(res.data.response.body.items.item);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="flex flex-col w-full">
       <Top />
       <div className="flex flex-col px-6 py-5 gap-7">
-        <ItemBox />
-        <ItemBox />
+        <ItemBox data={data} />
       </div>
       <div className="px-6 mb-12">
         <Videos />
