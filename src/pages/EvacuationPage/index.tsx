@@ -12,24 +12,26 @@ export default function EvacuationPage() {
       <div className="h-12">
         <Header title="대피요령" button={null} />
       </div>
-      <SubHeader
-        left={
-          <button
-            className={`w-full h-full ${current === 0 && "border-b border-primary"}`}
-            onClick={() => setCurrent(0)}
-          >
-            국민행동요령
-          </button>
-        }
-        right={
-          <button
-            className={`w-full h-full ${current === 1 && "border-b border-primary"}`}
-            onClick={() => setCurrent(1)}
-          >
-            긴급신고
-          </button>
-        }
-      />
+      <div className="h-12">
+        <SubHeader
+          left={
+            <button
+              className={`w-full h-full ${current === 0 && "border-b border-primary"}`}
+              onClick={() => setCurrent(0)}
+            >
+              국민행동요령
+            </button>
+          }
+          right={
+            <button
+              className={`w-full h-full ${current === 1 && "border-b border-primary"}`}
+              onClick={() => setCurrent(1)}
+            >
+              긴급신고
+            </button>
+          }
+        />
+      </div>
       {current === 0 ? <Behaviors /> : <Emergency />}
     </div>
   );
