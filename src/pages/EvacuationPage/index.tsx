@@ -12,7 +12,7 @@ export default function EvacuationPage() {
       <div className="h-12">
         <Header title="대피요령" button={null} />
       </div>
-      <div className="h-12">
+      <div className="h-10">
         <SubHeader
           left={
             <button
