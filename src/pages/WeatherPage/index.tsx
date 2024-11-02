@@ -69,7 +69,10 @@ export default function WeatherPage() {
         pageNo: 1,
         dataType: "JSON",
         regId: "11B00000", //서울, 인천, 경기도
-        tmFc: `${formatDate(yesterday)}1800`,
+        tmFc:
+          today.getHours() >= 18
+            ? `${formatDate(today)}1800`
+            : `${formatDate(yesterday)}1800`,
       },
     };
     const options4 = {
@@ -79,10 +82,12 @@ export default function WeatherPage() {
         pageNo: 1,
         dataType: "JSON",
         regId: "11B20601", //수원
-        tmFc: `${formatDate(yesterday)}1800`,
+        tmFc:
+          today.getHours() >= 18
+            ? `${formatDate(today)}1800`
+            : `${formatDate(yesterday)}1800`,
       },
     };
-
     try {
       const res1 = await axios.get(
         `http://apis.data.go.kr/1360000/${url_weather}`,
@@ -104,7 +109,6 @@ export default function WeatherPage() {
         `http://apis.data.go.kr/1360000/${url_week_temp}`,
         options4
       );
-
       setWeatherData(res1.data.response.body.items.item);
       setUvData(res2.data.response.body.items.item);
       setAirData(res3.data.response.body.items.item);
