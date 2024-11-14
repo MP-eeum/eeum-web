@@ -11,7 +11,6 @@ module.exports = function (app) {
       },
     })
   );
-  // };
   app.use(
     "/api2",
     createProxyMiddleware({
@@ -19,6 +18,16 @@ module.exports = function (app) {
       changeOrigin: true,
       pathRewrite: {
         "^/api2": "",
+      },
+    })
+  );
+  app.use(
+    "/api3",
+    createProxyMiddleware({
+      target: "https://www.safetydata.go.kr",
+      changeOrigin: true,
+      pathRewrite: {
+        "^/api3": "",
       },
     })
   );
