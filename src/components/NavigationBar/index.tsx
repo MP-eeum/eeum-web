@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import icn_news from "../../assets/svgs/icn_news.svg";
-import icn_news_off from "../../assets/svgs/icn_news_off.svg";
-import icn_weather from "../../assets/svgs/icn_weather.svg";
-import icn_weather_off from "../../assets/svgs/icn_weather_off.svg";
-import icn_home from "../../assets/svgs/icn_home.svg";
-import icn_home_off from "../../assets/svgs/icn_home_off.svg";
-import icn_emergency from "../../assets/svgs/icn_emergency.svg";
-import icn_emergency_off from "../../assets/svgs/icn_emergency_off.svg";
-import icn_megaphone from "../../assets/svgs/icn_megaphone.svg";
-import icn_megaphone_off from "../../assets/svgs/icn_megaphone_off.svg";
+import icn_news from "../../assets/icons/icn_news.svg";
+import icn_news_off from "../../assets/icons/icn_news_off.svg";
+import icn_weather from "../../assets/icons/icn_weather.svg";
+import icn_weather_off from "../../assets/icons/icn_weather_off.svg";
+import icn_home from "../../assets/icons/icn_home.svg";
+import icn_home_off from "../../assets/icons/icn_home_off.svg";
+import icn_emergency from "../../assets/icons/icn_emergency.svg";
+import icn_emergency_off from "../../assets/icons/icn_emergency_off.svg";
+import icn_megaphone from "../../assets/icons/icn_megaphone.svg";
+import icn_megaphone_off from "../../assets/icons/icn_megaphone_off.svg";
 
 export default function NavigationBar() {
   const buttons = [
