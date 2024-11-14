@@ -55,7 +55,7 @@ export default function Top({ data }: Props) {
         <div className="absolute z-10 w-full h-96 from-[rgba(255,255,255,0.1)] to-[rgba(255,255,255,0.875)] bg-gradient-to-t " />
       </div>
       <div className="absolute z-20 p-8">
-        <div className="z-10 text-xs text-black02 mb-[0.15rem]">
+        <div className="z-10 text-xs text-textgray mb-[0.15rem]">
           오늘의 재난 예측
         </div>
         <div className="z-10 mb-2 text-xl font-medium">
@@ -63,7 +63,7 @@ export default function Top({ data }: Props) {
           <br />
           <div dangerouslySetInnerHTML={{ __html: current.content }} />
         </div>
-        <div className="z-10 text-sm  mb-[0.2rem]">수원시 권선구</div>
+        <div className="z-10 text-sm  mb-[0.2rem]">수원시 팔달구</div>
         <div className="z-10 flex items-center gap-1">
           <div className="text-3xl">🌨️</div>
           <div className="ml-[-1.125rem] text-xl font-bold">-3º</div>
