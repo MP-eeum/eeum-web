@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import icn_currentLoc from "../../assets/svgs/icn_currentLoc.svg";
+import icn_marker from "../../assets/svgs/icn_marker.svg";
 import shelterdata from "../../shelterdata";
 import Header from "../../components/Header";
 import CustomMarker from "./CustomMarker";

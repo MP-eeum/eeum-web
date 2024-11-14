@@ -7,6 +7,7 @@ interface Props {
 
 export default function Top({ data }: Props) {
   const [current, setCurrent] = useState(maindata[0]);
+
   useEffect(() => {
     if (!data || data.length === 0) return;
     const state = data[0].pwn;
@@ -42,6 +43,7 @@ export default function Top({ data }: Props) {
       return;
     }
   });
+
   return (
     <div className="relative flex flex-col text-black">
       <div className="flex items-end">

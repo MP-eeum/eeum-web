@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import ItemBox from "./ItemBox";
 import Top from "./Top";
 import Videos from "./Videos";
@@ -16,8 +16,6 @@ export default function LandingPage() {
     const options = {
       params: {
         serviceKey: process.env.REACT_APP_DECODE,
-        numOfRows: 1000,
-        pageNo: 1,
         dataType: "JSON",
         stnId: 108, //전국
       },
@@ -27,6 +25,7 @@ export default function LandingPage() {
         `http://apis.data.go.kr/1360000/${url}`,
         options
       );
+      console.log(res.data.response);
       setData(res.data.response.body.items.item);
     } catch (e) {
       console.log(e);
