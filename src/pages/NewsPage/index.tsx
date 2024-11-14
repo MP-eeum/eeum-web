@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import icn_search from "../../assets/svgs/icn_search.svg";
+import icn_search from "../../assets/icons/icn_search.svg";
 import Header from "../../components/Header";
 import Article from "./Article";
 import Urgent from "./Urgent";

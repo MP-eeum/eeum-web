@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import icn_snow from "../../../assets/svgs/icn_snow.svg";
-import icn_back from "../../../assets/svgs/icn_back.svg";
-import icn_next from "../../../assets/svgs/icn_next.svg";
+import icn_snow from "../../../assets/icons/icn_snow.svg";
+import icn_back from "../../../assets/icons/icn_back.svg";
+import icn_next from "../../../assets/icons/icn_next.svg";
 
 interface Props {
   data: any[];

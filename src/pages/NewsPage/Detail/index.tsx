@@ -1,4 +1,4 @@
-import icn_back from "../../../assets/svgs/icn_back.svg";
+import icn_back from "../../../assets/icons/icn_back.svg";
 
 interface Item {
   title: string;

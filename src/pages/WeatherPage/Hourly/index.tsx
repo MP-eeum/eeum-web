@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import icn_sun from "../../../assets/svgs/icn_sun.svg";
-import icn_moon from "../../../assets/svgs/icn_moon.svg";
-import icn_cloud from "../../../assets/svgs/icn_cloud.svg";
-import icn_rain from "../../../assets/svgs/icn_rain.svg";
-import icn_snow from "../../../assets/svgs/icn_snow.svg";
+import icn_sun from "../../../assets/icons/icn_sun.svg";
+import icn_moon from "../../../assets/icons/icn_moon.svg";
+import icn_cloud from "../../../assets/icons/icn_cloud.svg";
+import icn_rain from "../../../assets/icons/icn_rain.svg";
+import icn_snow from "../../../assets/icons/icn_snow.svg";
 
 interface Item {
   [key: string]: string;
