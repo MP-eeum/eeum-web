@@ -25,7 +25,6 @@ export default function LandingPage() {
         `http://apis.data.go.kr/1360000/${url}`,
         options
       );
-      console.log(res.data.response);
       setData(res.data.response.body.items.item);
     } catch (e) {
       console.log(e);
