@@ -264,20 +264,20 @@ export default function DisasterPage() {
   const getMarkerInfo = (item: any) => {
     const { name, type, addr, marker } = item;
     return (
-      <div className="relative flex flex-col gap-3 bg-white px-6 py-8 rounded-t-3xl shadow-[0_0_15px_1px_rgba(0,0,0,0.08)]">
+      <div className="relative flex flex-col gap-2 bg-white px-6 pb-5 pt-8 rounded-t-3xl shadow-[0_0_15px_1px_rgba(0,0,0,0.08)]">
         <div className="flex items-center gap-3">
-          <div>{name}</div>
-          <div className="text-[#bbbbbb] text-sm">{type}</div>
+          <div className="text-lg font-medium">{name}</div>
+          <div className="text-sm text-textgray">{type}</div>
         </div>
-        <div>{addr}</div>
+        <div className="mb-4">{addr}</div>
         <div
-          className="w-full py-3 text-center text-white cursor-pointer bg-primary rounded-xl"
+          className="w-full py-3 text-center text-white rounded-lg cursor-pointer bg-primary"
           onClick={() => drawPath(marker)}
         >
           대피소 길찾기
         </div>
         <div
-          className="absolute cursor-pointer top-4 right-6"
+          className="absolute cursor-pointer top-2 right-5"
           onClick={() => closePath()}
         >
           x
@@ -313,7 +313,7 @@ export default function DisasterPage() {
       </div>
       <div id="map" className="z-20 flex-1 w-full bg-lightgray" ref={mapRef} />
       {showPath && seletedItem && (
-        <div className="absolute bottom-0 z-30 w-full">
+        <div className="absolute bottom-0 z-30 w-full animate-slideUp">
           {getMarkerInfo(seletedItem)}
         </div>
       )}
