@@ -11,7 +11,7 @@ export default function ItemBox({ data }: Props) {
   const [pwn, setPwn] = useState<any[]>([]);
   const today = [
     new Date().toISOString().split("T")[0],
-    new Date().toISOString().split("T")[1].slice(0, 5),
+    new Date().toString().split(" ")[4].slice(0, 5),
   ].join(" ");
 
   useEffect(() => {
