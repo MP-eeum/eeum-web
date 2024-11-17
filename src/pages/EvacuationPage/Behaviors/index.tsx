@@ -143,6 +143,8 @@ export default function Behaviors() {
   const DisasterItem = ({ item }: { item: DisasterItem }) => (
     <a
       href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
       className="flex flex-col items-center transition-opacity hover:opacity-80"
     >
       <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gray-50">
