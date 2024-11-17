@@ -53,7 +53,7 @@ export default function Chatbot({ setShowChat }: any) {
       <div className="text-sm text-center text-textlight">
         {formatDate(day)}
       </div>
-      <div className="flex flex-col w-full gap-2">
+      <div className="flex flex-col w-full gap-2 pb-4 mb-20 overflow-y-auto h-fit Chatbot">
         {chat.map((msg, index) => (
           <div
             key={index}

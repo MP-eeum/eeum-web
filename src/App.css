@@ -11,6 +11,10 @@
   height: 0;
   width: 1rem;
 }
+.Chatbot::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
 ::-webkit-scrollbar-thumb {
   background: #b6b6b6;
   border-radius: 1rem;
