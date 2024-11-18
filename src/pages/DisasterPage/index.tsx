@@ -12,8 +12,7 @@ export default function DisasterPage() {
 
   const [currentLoc, setCurrentLoc] = useState({ x: 0, y: 0 });
   const [shelters, setShelters] = useState([]);
-  const [showShelters, setShowShelters] = useState(false);
-  const [showHospitals, setShowHospitals] = useState(false);
+  const [showPlaces, setShowPlaces] = useState("");
   const [hospitals, setHospitals] = useState([]);
   const [showPath, setShowPath] = useState(false);
   const [seletedItem, setSelectedItem] = useState<any>();
@@ -29,7 +28,7 @@ export default function DisasterPage() {
   useEffect(() => {
     if (markers.length === 0) return;
     setVisibleMarkers();
-  }, [markers, showHospitals, showShelters]);
+  }, [markers, showPlaces]);
 
   const setMap = (x: number, y: number) => {
     setCurrentLoc({
@@ -190,10 +189,10 @@ export default function DisasterPage() {
   const setVisibleMarkers = () => {
     for (var i = 0; i < markers.length; i++) {
       if (markers[i].getTitle().startsWith("shelter"))
-        if (showShelters) markers[i].setVisible(true);
+        if (showPlaces === "shelter") markers[i].setVisible(true);
         else markers[i].setVisible(false);
       else if (markers[i].getTitle().startsWith("hospital"))
-        if (showHospitals) markers[i].setVisible(true);
+        if (showPlaces === "hospital") markers[i].setVisible(true);
         else markers[i].setVisible(false);
     }
   };
@@ -286,6 +285,12 @@ export default function DisasterPage() {
     );
   };
 
+  const handleBtnClick = (btn: string) => {
+    if (showPath) return;
+    if (btn === showPlaces) setShowPlaces("");
+    else setShowPlaces(btn);
+  };
+
   return (
     <div className="relative flex flex-col w-full h-full">
       <div className="h-12">
@@ -293,19 +298,15 @@ export default function DisasterPage() {
       </div>
       <div className="absolute left-0 z-30 flex w-full gap-3 m-2 text-sm top-12">
         <div
-          className={`flex items-center gap-1 px-2 py-1 shadow-lg cursor-pointer w-fit rounded-xl ${showHospitals ? "bg-primary text-white" : "bg-white"}`}
-          onClick={() => {
-            if (!showPath) setShowHospitals(!showHospitals);
-          }}
+          className={`flex items-center gap-1 px-2 py-1 shadow-lg cursor-pointer w-fit rounded-xl ${showPlaces === "hospital" ? "bg-primary text-white" : "bg-white"}`}
+          onClick={() => handleBtnClick("hospital")}
         >
           <img src={icn_redcross} />
           <div className="w-fit text-nowrap">응급진료</div>
         </div>
         <div
-          className={`flex items-center gap-1 px-2 py-1 shadow-lg cursor-pointer w-fit rounded-xl ${showShelters ? "bg-primary text-white" : "bg-white"}`}
-          onClick={() => {
-            if (!showPath) setShowShelters(!showShelters);
-          }}
+          className={`flex items-center gap-1 px-2 py-1 shadow-lg cursor-pointer w-fit rounded-xl ${showPlaces === "shelter" ? "bg-primary text-white" : "bg-white"}`}
+          onClick={() => handleBtnClick("shelter")}
         >
           <img src={icn_shelter} />
           <p>대피소</p>
