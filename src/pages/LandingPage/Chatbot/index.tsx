@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PulseLoader } from "react-spinners";
 import icn_close from "../../../assets/icons/icn_close.svg";
 import icn_btnAI from "../../../assets/icons/icn_btnAI.png";
 import icn_send from "../../../assets/icons/icn_send.svg";
@@ -116,6 +117,11 @@ export default function Chatbot({ setShowChat }: any) {
           </div>
         ))}
       </div>
+      {loading && (
+        <div className="absolute w-full flex bg-[rgba(255,255,255,0.5)] items-center justify-center h-full pb-36">
+          <PulseLoader color="#396951" size="10px" />
+        </div>
+      )}
       <div className="absolute flex items-center bottom-0 flex-1 w-[90%] h-12 p-2 my-8 text-sm border rounded-3xl border-primary bg-white">
         <input
           className="flex-1 px-2 outline-none"
