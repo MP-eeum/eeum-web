@@ -16,6 +16,7 @@ export default function Chatbot({ setShowChat }: any) {
     "안녕하세요, 이음입니다.<br/>문의하실 내용이 있으신가요?",
   ]);
   const [input, setInput] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const day = new Date();
 
   const formatDate = (input: any) => {
@@ -32,10 +33,42 @@ export default function Chatbot({ setShowChat }: any) {
     setInput(e.target.value);
   };
 
-  const handleChat = () => {
-    if (input === "") return;
-    setChat([...chat, input]);
+  const handleOpenAIFunc = async (req: string) => {
     setInput("");
+    setLoading(true);
+    const message = req.trim();
+    const url = "https://api.openai.com/v1/chat/completions";
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "user",
+              content: message,
+            },
+          ],
+          temperature: 0.8,
+          max_tokens: 1024,
+          top_p: 1,
+          frequency_penalty: 0.5,
+          presence_penalty: 0.5,
+          stop: ["STOP"],
+        }),
+      });
+      const data = await res.json();
+      setChat([...chat, message, data.choices[0].message.content]);
+    } catch (e) {
+      console.log(e);
+      setChat((chat) => chat.slice(0, -1));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,14 +97,14 @@ export default function Chatbot({ setShowChat }: any) {
               className={`flex flex-col gap-2 text-sm items-${index % 2 === 0 ? "start" : "end"}`}
             >
               <MessageBox isRes={index % 2 === 0} message={msg} />
-              {index === 0 && (
+              {index % 2 === 0 && (
                 <div className="flex flex-col gap-1">
                   {questions.map((item, index) => (
                     <div
                       className="px-3 py-2 border cursor-pointer border-boxgray rounded-3xl hover:border-primary"
                       key={index}
                       onClick={() => {
-                        setChat([...chat, item]);
+                        handleOpenAIFunc(item);
                       }}
                     >
                       {item}
@@ -94,7 +127,7 @@ export default function Chatbot({ setShowChat }: any) {
           <img
             className="cursor-pointer"
             src={icn_send}
-            onClick={() => handleChat()}
+            onClick={() => handleOpenAIFunc(input)}
           />
         )}
       </div>
