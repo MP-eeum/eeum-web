@@ -9,6 +9,7 @@ interface Props {
 
 export default function ItemBox({ data }: Props) {
   const [pwn, setPwn] = useState<any[]>([]);
+  const [current, setCurrent] = useState(0);
   const today = [
     new Date().toISOString().split("T")[0],
     new Date().toString().split(" ")[4].slice(0, 5),
@@ -16,22 +17,58 @@ export default function ItemBox({ data }: Props) {
 
   useEffect(() => {
     if (data.length === 0) return;
-    const result = data.map((item: any) => item.pwn.split("\r\n"));
-    if (result.length === 0) return;
-    const pairedData = [];
-    for (let j = 0; j < result.length; j++) {
-      for (let i = 0; i < result[j].length; i += 2) {
-        const pair = result[j].slice(i, i + 2);
-        const child = {
-          title: pair[0].slice(4),
-          time: pair[1].split(" : ")[0].slice(2),
-          loc: pair[1].split(" : ")[1],
-        };
-        pairedData.push(child);
+    const result: any[] = [];
+    let currentCategory = "";
+    let currentGroup: any[] = [];
+
+    data[0].pwn.split("\r\n").forEach((item: any) => {
+      const match = item.match(/^\((\d+)\)/);
+      if (match) {
+        if (currentGroup.length > 0) {
+          result.push({ category: currentCategory, items: currentGroup });
+        }
+        currentCategory = item.slice(4);
+        currentGroup = [];
+      } else {
+        currentGroup.push(item);
       }
+    });
+    if (currentGroup.length > 0) {
+      result.push({ category: currentCategory, items: currentGroup });
     }
-    setPwn(pairedData);
+
+    if (result.length === 0) return;
+    // const pairedData = [];
+    // for (let j = 0; j < result.length; j++) {
+    //   for (let i = 0; i < result[j].length; i += 2) {
+    //     const pair = result[j].slice(i, i + 2);
+    //     const child = {
+    //       title: pair[0].slice(4),
+    //       time: pair[1].split(" : ")[0].slice(2),
+    //       loc: pair[1].split(" : ")[1],
+    //     };
+    //     pairedData.push(child);
+    //   }
+    // }
+    // setPwn(pairedData);
+    const formattedData: any[] = [];
+    result.forEach((category) => {
+      category.items.map((item: any) => {
+        const child = {
+          title: category.category,
+          time: item.split(" : ")[0].slice(2),
+          loc: item.split(" : ")[1],
+        };
+        formattedData.push(child);
+      });
+    });
+    setPwn(formattedData);
   }, [data]);
+
+  const formatData = (input: string) => {
+    if (input.length < 30) return input;
+    return input.slice(0, 30) + "...";
+  };
 
   if (!pwn) return <div></div>;
   return (
@@ -51,28 +88,37 @@ export default function ItemBox({ data }: Props) {
           </div>
         ) : (
           <>
-            {pwn.map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-col min-w-full gap-3 px-10 py-5"
-              >
-                <div className="flex items-center gap-3 bg-white">
-                  <div className="font-semibold">재난 속보</div>
-                  <span style={{ color: "#BFBFBF" }}>|</span>
-                  <div className="text-sm text-textgray">{item.time}</div>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <img className="w-16" alt="weather-image" src={icn_snow} />
-                  <div className="flex flex-col">
-                    <div>{item.title}</div>
-                    <div className="text-textgray">{item.loc}</div>
+            <div className="flex flex-col min-w-full gap-3 px-8 py-5">
+              <div className="flex items-center gap-3 bg-white">
+                <div className="font-semibold">재난 속보</div>
+                <span style={{ color: "#BFBFBF" }}>|</span>
+                <div className="text-sm text-textgray">{pwn[current].time}</div>
+              </div>
+              <div className="flex items-center gap-4 text-sm">
+                <img className="min-w-16" alt="weather-image" src={icn_snow} />
+                <div className="flex flex-col max-w-3xl">
+                  <div className="font-semibold">{pwn[current].title}</div>
+                  <div className="text-textgray">
+                    {formatData(pwn[current].loc)}
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
             <div className="absolute flex items-center justify-between w-full h-full px-1">
-              <img className="cursor-pointer" src={icn_back} />
-              <img className="cursor-pointer" src={icn_next} />
+              <div>
+                <img
+                  className={`cursor-pointer ${current === 0 && "hidden"}`}
+                  src={icn_back}
+                  onClick={() => setCurrent(current - 1)}
+                />
+              </div>
+              <div>
+                <img
+                  className={`cursor-pointer ${current === pwn.length - 1 && "hidden"}`}
+                  src={icn_next}
+                  onClick={() => setCurrent(current + 1)}
+                />
+              </div>
             </div>
           </>
         )}

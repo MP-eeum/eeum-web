@@ -36,6 +36,8 @@ export default function LandingPage() {
         serviceKey: process.env.REACT_APP_DECODE,
         dataType: "JSON",
         stnId: 108, //전국
+        fromTmFc: 20241116,
+        ToTmFc: 20241116,
       },
     };
     const options1 = {
