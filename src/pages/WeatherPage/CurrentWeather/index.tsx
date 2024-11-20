@@ -44,7 +44,7 @@ export default function CurrentWeather({ data, today, formatDate }: Props) {
     if (pty === "1" || pty === "4") return img_rain;
     else if (pty === "3") return img_snow;
     else if (sky > "5") return img_cloud;
-    else if (time > "6" && time < "18") return img_sun;
+    else if (Number(time) > 600 && Number(time) < 1800) return img_sun;
     return img_moon;
   };
 
