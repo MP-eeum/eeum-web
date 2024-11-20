@@ -22,18 +22,25 @@ export default function AirCondition({ data, today }: Props) {
     setState(data[0][`h${Math.floor(today.getHours() / 3) * 3}`]);
   }, []);
 
+  const getConditionBar = () => {
+    if (!state) return;
+    return (
+      <div className="relative w-full h-4 rounded-xl bg-lightgray">
+        <div
+          className={`absolute w-[${Number(state)}%] h-4 z-30 rounded-xl bg-primary`}
+        >
+          <div className="absolute right-0 w-4 h-4 border-2 border-white bg-none rounded-xl" />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col gap-3 px-5 py-4 border rounded-lg border-lightgray">
       <div className="flex flex-col font-semibold">
         대기정체지수 {state} ({getAirState(Number(state))})
       </div>
-      <div className="relative w-full h-4 rounded-xl bg-lightgray">
-        <div
-          className={`absolute w-[${Number(state)}%] h-4 rounded-xl bg-primary`}
-        >
-          <div className="absolute right-0 w-4 h-4 border-2 border-white bg-none rounded-xl" />
-        </div>
-      </div>
+      {getConditionBar()}
     </div>
   );
 }
