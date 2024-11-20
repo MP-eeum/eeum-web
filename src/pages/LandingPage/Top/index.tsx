@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PulseLoader } from "react-spinners";
 import { maindata } from "../../../maindata";
 import img_sun from "../../../assets/images/img_sun.png";
 import img_moon from "../../../assets/images/img_moon.png";
@@ -22,6 +23,7 @@ export default function Top({
     text: "",
     image: "",
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!data || data.length === 0) return;
@@ -75,6 +77,7 @@ export default function Top({
     else if (Number(time) > 600 && Number(time) < 1800)
       setWeather({ ...weather, text: "맑음", image: img_sun });
     else setWeather({ ...weather, text: "맑음", image: img_moon });
+    setLoading(false);
   };
 
   return (
@@ -96,16 +99,20 @@ export default function Top({
           <br />
           <div dangerouslySetInnerHTML={{ __html: current.content }} />
         </div>
-        <div className="z-10 flex items-center gap-1">
-          <img className="w-8" alt="img_weather" src={weather.image} />
-          <div className="ml-[-1.125rem] text-xl font-bold">
-            {weather.temp}º
+        {loading ? (
+          <PulseLoader color="#396951" size="7px" />
+        ) : (
+          <div className="z-10 flex items-center gap-1">
+            <img className="w-8" alt="img_weather" src={weather.image} />
+            <div className="ml-[-1.125rem] text-xl font-bold">
+              {weather.temp}º
+            </div>
+            <div className="flex flex-col mb-2 text-xs font-extrabold">
+              <div>수원시 팔달구</div>
+              <div>{weather.text}</div>
+            </div>
           </div>
-          <div className="flex flex-col mb-2 text-xs font-extrabold">
-            <div>수원시 팔달구</div>
-            <div>{weather.text}</div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

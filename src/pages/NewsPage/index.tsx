@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { PulseLoader } from "react-spinners";
 import icn_search from "../../assets/icons/icn_search.svg";
 import Header from "../../components/Header";
 import Article from "./Article";
@@ -20,6 +21,7 @@ export default function NewsPage() {
   const [articles, setArticles] = useState<Item[]>([]);
   const [detail, setDetail] = useState<Item>();
   const [showDetail, setShowDetail] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getNewsData();
@@ -51,9 +53,15 @@ export default function NewsPage() {
         display: 100,
       },
     };
-
-    const res = await axios.get(url, options);
-    setData(res.data.items);
+    setLoading(true);
+    try {
+      const res = await axios.get(url, options);
+      setData(res.data.items);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formatText = (input: string) => {
@@ -77,6 +85,17 @@ export default function NewsPage() {
     setDetail(input);
   };
 
+  if (loading)
+    return (
+      <div className="flex flex-col w-full h-full">
+        <div className="h-12">
+          <Header title="재난뉴스" button={null} />
+        </div>
+        <div className="flex items-center justify-center w-full h-full">
+          <PulseLoader color="#396951" size="10px" />
+        </div>
+      </div>
+    );
   return (
     <div className="flex flex-col">
       <div className="h-12">
