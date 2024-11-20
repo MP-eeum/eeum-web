@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { maindata } from "../../maindata";
 import icn_btnAI from "../../assets/icons/icn_btnAI.png";
 import ItemBox from "./ItemBox";
 import Top from "./Top";
@@ -11,6 +12,7 @@ export default function LandingPage() {
   const url_weather = "VilageFcstInfoService_2.0/getVilageFcst";
   const [data, setData] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
+  const [current, setCurrent] = useState(maindata[0]);
   const [showChat, setShowChat] = useState(false);
 
   const today = new Date();
@@ -72,12 +74,14 @@ export default function LandingPage() {
         weatherData={weatherData}
         today={today}
         formatDate={formatDate}
+        current={current}
+        setCurrnet={setCurrent}
       />
       <div className="flex flex-col px-6 py-5 gap-7">
         <ItemBox data={data} />
       </div>
       <div className="px-6 mb-12">
-        <Videos />
+        <Videos current={current} />
       </div>
       <div className="fixed z-30 flex justify-end p-3 bottom-20 w-96">
         <img

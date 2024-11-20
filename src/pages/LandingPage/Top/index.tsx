@@ -6,19 +6,14 @@ import img_cloud from "../../../assets/images/img_cloud.png";
 import img_rain from "../../../assets/images/img_rain.png";
 import img_snow from "../../../assets/images/img_snow.png";
 
-interface Item {
-  [key: string]: string;
-}
-
-interface Props {
-  data: Item[];
-  weatherData: Item[];
-  today: Date;
-  formatDate: (link: Date) => string;
-}
-
-export default function Top({ data, weatherData, today, formatDate }: Props) {
-  const [current, setCurrent] = useState(maindata[0]);
+export default function Top({
+  data,
+  weatherData,
+  today,
+  formatDate,
+  current,
+  setCurrent,
+}: any) {
   const [weather, setWeather] = useState({
     temp: "",
     time: "",
@@ -64,37 +59,9 @@ export default function Top({ data, weatherData, today, formatDate }: Props) {
 
   const setCurrentFunc = () => {
     const state = data[0].pwn;
-    if (state.includes("폭염")) {
-      setCurrent(maindata[1]);
-      return;
-    } else if (state.includes("태풍")) {
-      setCurrent(maindata[2]);
-      return;
-    } else if (state.includes("홍수")) {
-      setCurrent(maindata[3]);
-      return;
-    } else if (state.includes("가뭄")) {
-      setCurrent(maindata[4]);
-      return;
-    } else if (state.includes("황사")) {
-      setCurrent(maindata[5]);
-      return;
-    } else if (state.includes("호우")) {
-      setCurrent(maindata[6]);
-      return;
-    } else if (state.includes("지진")) {
-      setCurrent(maindata[7]);
-      return;
-    } else if (state.includes("폭설")) {
-      setCurrent(maindata[8]);
-      return;
-    } else if (state.includes("산불")) {
-      setCurrent(maindata[9]);
-      return;
-    } else if (state.includes("화재")) {
-      setCurrent(maindata[10]);
-      return;
-    }
+    maindata.map((item: any) => {
+      if (state.includes(item.id)) setCurrent(item);
+    });
   };
 
   const getWeatherIcon = () => {
