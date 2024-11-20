@@ -80,7 +80,7 @@ export default function LandingPage() {
       <div className="flex flex-col px-6 py-5 gap-7">
         <ItemBox data={data} />
       </div>
-      <div className="px-6 mb-12">
+      <div className="mb-12">
         <Videos current={current} />
       </div>
       <div className="fixed z-30 flex justify-end p-3 bottom-20 w-96">
