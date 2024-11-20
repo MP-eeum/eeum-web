@@ -1,6 +1,6 @@
+import { videodata } from "../../../maindata";
 import icn_more from "../../../assets/icons/icn_more.svg";
 import VideoItem from "./VideoItem";
-import { videodata } from "../../../maindata";
 
 export default function Videos({ current }: any) {
   const moreVideosUrl = "https://www.safetv.go.kr/base/main/view";
@@ -14,8 +14,8 @@ export default function Videos({ current }: any) {
             window.open(moreVideosUrl, "_blank", "noopener,noreferrer")
           }
         >
-          <div className="font-semibold text-nowrap">영상 더보기</div>
-          <img src={icn_more} />
+          <div className="text-xs font-medium text-nowrap">영상 더보기</div>
+          <img className="w-5" src={icn_more} />
         </div>
       </div>
       <div className="overflow-x-auto scrollbar-hide">
