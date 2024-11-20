@@ -25,7 +25,7 @@ const EmergencyButton: React.FC<EmergencyButtonProps> = ({
       </div>
       <div className="flex flex-col items-start ml-4">
         <span className="text-md font-semibold mb-1">{title}</span>
-        <span className="text-sm text-gray-600">{description}</span>
+        <span className="text-sm text-textgray">{description}</span>
       </div>
     </button>
   );

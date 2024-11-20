@@ -29,8 +29,8 @@ export default function DayItem({ data }: Props) {
       <div>{getDateFunc(data.id)}</div>
       <div className="flex items-center justify-center gap-4">
         <div className="flex flex-col items-center">
-          {data.id === "0" && <p className="text-xs">오전</p>}
-          <div>{data.rainAm}%</div>
+          {data.id === "0" && <p className="text-xs text-textgray">오전</p>}
+          <div className="text-xs">{data.rainAm}%</div>
         </div>
         <img
           className="w-6"
@@ -43,8 +43,8 @@ export default function DayItem({ data }: Props) {
           src={getWeatherIcon(data.weatherPm)}
         />
         <div className="flex flex-col items-center">
-          {data.id === "0" && <p className="text-xs">오후</p>}
-          <div>{data.rainPm}%</div>
+          {data.id === "0" && <p className="text-xs text-textgray">오후</p>}
+          <div className="text-xs">{data.rainPm}%</div>
         </div>
       </div>
       <div className="flex gap-1">
