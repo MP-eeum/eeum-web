@@ -296,7 +296,7 @@ export default function DisasterPage() {
       <div className="h-12">
         <Header title="긴급상황" button={null} />
       </div>
-      <div className="absolute left-0 z-30 flex w-full gap-3 m-2 text-sm top-12">
+      <div className="absolute left-0 z-30 flex gap-3 m-2 text-sm w-fit top-12">
         <div
           className={`flex items-center gap-1 px-2 py-1 shadow-lg cursor-pointer w-fit rounded-xl ${showPlaces === "hospital" ? "bg-primary text-white" : "bg-white"}`}
           onClick={() => handleBtnClick("hospital")}
