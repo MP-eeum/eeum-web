@@ -53,20 +53,24 @@ export default function Hourly({ data, today }: Props) {
   };
 
   return (
-    <div className="flex w-full gap-1 px-5 py-4 border rounded-lg border-lightgray ">
-      {hourlyData.map((item, index) => (
-        <div
-          key={index}
-          className="flex flex-col items-center justify-center gap-1 min-w-12"
-        >
-          <div>{item.fcstTime}시</div>
-          <img
-            alt="weather-icon"
-            src={getWeatherIcon(item.fcstTime, item.sky, item.pty)}
-          />
-          <div>{item.temp}º</div>
+    <div className="border rounded-lg border-lightgray">
+      <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex gap-1 pl-2 pr-2 py-4">
+          {hourlyData.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center gap-1 min-w-12"
+            >
+              <div>{item.fcstTime}시</div>
+              <img
+                alt="weather-icon"
+                src={getWeatherIcon(item.fcstTime, item.sky, item.pty)}
+              />
+              <div>{item.temp}º</div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }
