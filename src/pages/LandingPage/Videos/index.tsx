@@ -22,7 +22,7 @@ export default function Videos({ current }: any) {
         <div className="flex gap-5 p-2">
           {videodata.map(
             (item: any) =>
-              item.title.includes(current.id) && (
+              item.id.includes(current.id) && (
                 <VideoItem key={item.content} data={item} />
               )
           )}
