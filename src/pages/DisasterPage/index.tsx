@@ -4,6 +4,7 @@ import icn_btnTarget from "../../assets/icons/icn_btnTarget.png";
 import icn_redcross from "../../assets/icons/icn_redcross.svg";
 import icn_shelter from "../../assets/icons/icn_shelter.png";
 import icn_currentLoc from "../../assets/icons/icn_currentLoc.svg";
+import icn_closeGreen from "../../assets/icons/icn_closeGreen.png";
 import Header from "../../components/Header";
 import CustomMarker from "./CustomMarker";
 
@@ -279,12 +280,11 @@ export default function DisasterPage() {
         >
           대피소 길찾기
         </div>
-        <div
-          className="absolute cursor-pointer top-2 right-5"
+        <img
+          className="absolute w-4 cursor-pointer top-3 right-4"
+          src={icn_closeGreen}
           onClick={() => closePath()}
-        >
-          x
-        </div>
+        />
       </div>
     );
   };
