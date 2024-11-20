@@ -1,15 +1,68 @@
 import { useEffect, useState } from "react";
 import { maindata } from "../../../maindata";
+import img_sun from "../../../assets/images/img_sun.png";
+import img_moon from "../../../assets/images/img_moon.png";
+import img_cloud from "../../../assets/images/img_cloud.png";
+import img_rain from "../../../assets/images/img_rain.png";
+import img_snow from "../../../assets/images/img_snow.png";
 
-interface Props {
-  data: any[];
+interface Item {
+  [key: string]: string;
 }
 
-export default function Top({ data }: Props) {
+interface Props {
+  data: Item[];
+  weatherData: Item[];
+  today: Date;
+  formatDate: (link: Date) => string;
+}
+
+export default function Top({ data, weatherData, today, formatDate }: Props) {
   const [current, setCurrent] = useState(maindata[0]);
+  const [weather, setWeather] = useState({
+    temp: "",
+    time: "",
+    sky: "",
+    pty: "",
+    text: "",
+    image: "",
+  });
 
   useEffect(() => {
     if (!data || data.length === 0) return;
+    setCurrentFunc();
+  }, [data]);
+
+  useEffect(() => {
+    if (weatherData.length === 0) return;
+    setWeatherFunc();
+  }, [weatherData]);
+
+  useEffect(() => {
+    if (weather.temp === "" || weather.image) return;
+    getWeatherIcon();
+  }, [weather]);
+
+  const setWeatherFunc = () => {
+    const filteredData = weatherData.filter(
+      (item: any) =>
+        (item.category === "TMP" ||
+          item.category === "PTY" ||
+          item.category === "SKY") &&
+        item.fcstDate === formatDate(today) &&
+        item.fcstTime === `${String(today.getHours()).padStart(2, "0")}00`
+    );
+    setWeather({
+      temp: filteredData[0].fcstValue,
+      time: filteredData[0].fcstTime,
+      sky: filteredData[1].fcstValue,
+      pty: filteredData[2].fcstValue,
+      text: "",
+      image: "",
+    });
+  };
+
+  const setCurrentFunc = () => {
     const state = data[0].pwn;
     if (state.includes("폭염")) {
       setCurrent(maindata[1]);
@@ -42,7 +95,20 @@ export default function Top({ data }: Props) {
       setCurrent(maindata[10]);
       return;
     }
-  });
+  };
+
+  const getWeatherIcon = () => {
+    const { time, sky, pty } = weather;
+    if (pty === "1" || pty === "4")
+      setWeather({ ...weather, text: "비", image: img_rain });
+    else if (pty === "3")
+      setWeather({ ...weather, text: "눈", image: img_snow });
+    else if (sky > "5")
+      setWeather({ ...weather, text: "흐림", image: img_cloud });
+    else if (Number(time) > 600 && Number(time) < 1800)
+      setWeather({ ...weather, text: "맑음", image: img_sun });
+    else setWeather({ ...weather, text: "맑음", image: img_moon });
+  };
 
   return (
     <div className="relative flex flex-col text-black">
@@ -63,13 +129,14 @@ export default function Top({ data }: Props) {
           <br />
           <div dangerouslySetInnerHTML={{ __html: current.content }} />
         </div>
-        <div className="z-10 text-sm  mb-[0.2rem]">수원시 팔달구</div>
         <div className="z-10 flex items-center gap-1">
-          <div className="text-3xl">🌨️</div>
-          <div className="ml-[-1.125rem] text-xl font-bold">-3º</div>
-          <div className="text-xs font-extrabold">
-            폭설 <br />
-            어제와 같은 기온
+          <img className="w-8" alt="img_weather" src={weather.image} />
+          <div className="ml-[-1.125rem] text-xl font-bold">
+            {weather.temp}º
+          </div>
+          <div className="flex flex-col mb-2 text-xs font-extrabold">
+            <div>수원시 팔달구</div>
+            <div>{weather.text}</div>
           </div>
         </div>
       </div>
