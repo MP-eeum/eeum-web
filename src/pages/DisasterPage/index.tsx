@@ -217,8 +217,8 @@ export default function DisasterPage() {
       const path = res.data.route.trafast[0].path;
       var polyline = new naver.maps.Polyline({
         path: path,
-        strokeColor: "#FF0000",
-        strokeOpacity: 0.75,
+        strokeColor: "#396951",
+        strokeOpacity: 1,
         strokeWeight: 5,
         map: newMap,
       });
