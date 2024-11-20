@@ -48,7 +48,7 @@ export default function Hourly({ data, today }: Props) {
     if (pty === "1" || pty === "4") return icn_rain;
     else if (pty === "3") return icn_snow;
     else if (sky > "5") return icn_cloud;
-    else if (time > "6" && time < "18") return icn_sun;
+    else if (Number(time) > 6 && Number(time) < 18) return icn_sun;
     return icn_moon;
   };
 
