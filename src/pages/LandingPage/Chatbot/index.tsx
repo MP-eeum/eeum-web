@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PulseLoader } from "react-spinners";
 import icn_close from "../../../assets/icons/icn_close.svg";
-import icn_btnAI from "../../../assets/icons/icn_btnAI.png";
+import icn_btnAI_profile from "../../../assets/icons/icn_btnAI_profile.png";
 import icn_send from "../../../assets/icons/icn_send.svg";
 import MessageBox from "./MessageBox";
 
@@ -93,7 +93,9 @@ export default function Chatbot({ setShowChat }: any) {
             key={index}
             className={`w-full py-3 flex px-6 gap-2 justify-${index % 2 === 0 ? "start" : "end"}`}
           >
-            {index % 2 === 0 && <img className="w-10 h-10" src={icn_btnAI} />}
+            {index % 2 === 0 && (
+              <img className="w-10 h-10" src={icn_btnAI_profile} />
+            )}
             <div
               className={`flex flex-col gap-2 text-sm items-${index % 2 === 0 ? "start" : "end"}`}
             >

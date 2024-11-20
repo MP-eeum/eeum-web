@@ -85,7 +85,7 @@ export default function LandingPage() {
       </div>
       <div className="fixed z-30 flex justify-end p-3 bottom-20 w-96">
         <img
-          className="cursor-pointer"
+          className="w-16 cursor-pointer"
           src={icn_btnAI}
           onClick={() => setShowChat(true)}
         />
