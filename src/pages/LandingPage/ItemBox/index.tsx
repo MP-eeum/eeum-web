@@ -36,14 +36,15 @@ export default function ItemBox({ data }: Props) {
   if (!pwn) return <div></div>;
   return (
     <div className="flex flex-col">
-      <div className="relative flex my-2 border rounded-lg border-lightgray">
+      <div className="relative flex my-2 border rounded-2xl border-lightgray">
         {pwn.length === 0 ? (
           <div className="flex flex-col min-w-full gap-3 px-10 py-5">
             <div className="flex items-center gap-3 bg-white">
-              <div className="font-semibold">재난 속보</div>|
+              <div className="font-semibold">재난 속보</div>
+              <span style={{ color: "#BFBFBF" }}>|</span>
               <div className="text-sm text-textgray">{today} 기준</div>
             </div>
-            <div className="flex items-center gap-3 text-sm text-center">
+            <div className="flex items-center gap-3 text-sm">
               현재 시각까지 보고된 재난 소식은 없습니다.
               <br /> 안전에 유의하시고 편안한 하루 보내세요.
             </div>
@@ -56,7 +57,8 @@ export default function ItemBox({ data }: Props) {
                 className="flex flex-col min-w-full gap-3 px-10 py-5"
               >
                 <div className="flex items-center gap-3 bg-white">
-                  <div className="font-semibold">재난 속보</div>|
+                  <div className="font-semibold">재난 속보</div>
+                  <span style={{ color: "#BFBFBF" }}>|</span>
                   <div className="text-sm text-textgray">{item.time}</div>
                 </div>
                 <div className="flex items-center gap-3 text-sm">

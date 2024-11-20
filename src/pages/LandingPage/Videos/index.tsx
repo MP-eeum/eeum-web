@@ -14,15 +14,17 @@ export default function Videos() {
             window.open(moreVideosUrl, "_blank", "noopener,noreferrer")
           }
         >
-          <div className="text-nowrap">영상 더보기</div>
+          <div className="text-nowrap font-semibold">영상 더보기</div>
           <img src={icn_more} />
         </div>
       </div>
-      <div className="flex w-full gap-5">
-        {videodata.map((item: any) => (
-          <VideoItem key={item.title} data={item} />
-        ))}
-      </div>
+      <div className="overflow-x-auto scrollbar-hide">
+       <div className="flex gap-5 p-2">
+         {videodata.map((item: any) => (
+           <VideoItem key={item.title} data={item} />
+         ))}
+       </div>
+     </div>
     </div>
   );
 }
