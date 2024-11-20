@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { PulseLoader } from "react-spinners";
 import { maindata } from "../../maindata";
 import icn_btnAI from "../../assets/icons/icn_btnAI.png";
 import ItemBox from "./ItemBox";
@@ -14,6 +15,7 @@ export default function LandingPage() {
   const [weatherData, setWeatherData] = useState([]);
   const [current, setCurrent] = useState(maindata[0]);
   const [showChat, setShowChat] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const today = new Date();
   const yesterday = new Date();
@@ -36,8 +38,8 @@ export default function LandingPage() {
         serviceKey: process.env.REACT_APP_DECODE,
         dataType: "JSON",
         stnId: 108, //전국
-        fromTmFc: 20241116,
-        ToTmFc: 20241116,
+        // fromTmFc: 20241116,
+        // ToTmFc: 20241116,
       },
     };
     const options1 = {
@@ -52,6 +54,7 @@ export default function LandingPage() {
         ny: 121,
       },
     };
+    setLoading(true);
     try {
       const res = await axios.get(
         `http://apis.data.go.kr/1360000/${url}`,
@@ -66,6 +69,8 @@ export default function LandingPage() {
       setData(res.data.response.body.items.item);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,8 +84,14 @@ export default function LandingPage() {
         current={current}
         setCurrnet={setCurrent}
       />
-      <div className="flex flex-col px-6 py-5 gap-7">
-        <ItemBox data={data} />
+      <div className="flex flex-col justify-center px-6 py-5">
+        {loading ? (
+          <div className="flex items-center justify-center h-36">
+            <PulseLoader color="#396951" size="10px" />
+          </div>
+        ) : (
+          <ItemBox data={data} />
+        )}
       </div>
       <div className="mb-12">
         <Videos current={current} />

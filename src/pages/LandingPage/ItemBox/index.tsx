@@ -10,6 +10,7 @@ interface Props {
 export default function ItemBox({ data }: Props) {
   const [pwn, setPwn] = useState<any[]>([]);
   const [current, setCurrent] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
   const today = [
     new Date().toISOString().split("T")[0],
     new Date().toString().split(" ")[4].slice(0, 5),
@@ -69,6 +70,12 @@ export default function ItemBox({ data }: Props) {
     if (input.length < 30) return input;
     return input.slice(0, 30) + "...";
   };
+  const handleClick = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      setIsClicked(false);
+    }, 500);
+  };
 
   if (!pwn) return <div></div>;
   return (
@@ -88,7 +95,9 @@ export default function ItemBox({ data }: Props) {
           </div>
         ) : (
           <>
-            <div className="flex flex-col min-w-full gap-3 px-8 py-5">
+            <div
+              className={`flex flex-col justify-center min-w-full gap-3 px-8 py-5 min-h-36 ${isClicked && "animate-opacity"}`}
+            >
               <div className="flex items-center gap-3 bg-white">
                 <div className="font-semibold">재난 속보</div>
                 <span style={{ color: "#BFBFBF" }}>|</span>
@@ -109,14 +118,20 @@ export default function ItemBox({ data }: Props) {
                 <img
                   className={`cursor-pointer ${current === 0 && "hidden"}`}
                   src={icn_back}
-                  onClick={() => setCurrent(current - 1)}
+                  onClick={() => {
+                    setCurrent(current - 1);
+                    handleClick();
+                  }}
                 />
               </div>
               <div>
                 <img
                   className={`cursor-pointer ${current === pwn.length - 1 && "hidden"}`}
                   src={icn_next}
-                  onClick={() => setCurrent(current + 1)}
+                  onClick={() => {
+                    setCurrent(current + 1);
+                    handleClick();
+                  }}
                 />
               </div>
             </div>
