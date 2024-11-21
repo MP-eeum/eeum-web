@@ -3,6 +3,7 @@ import axios from "axios";
 import { PulseLoader } from "react-spinners";
 import { maindata } from "../../maindata";
 import icn_btnAI from "../../assets/icons/icn_btnAI.png";
+import img_textbox from "../../assets/images/img_textbox.png";
 import ItemBox from "./ItemBox";
 import Top from "./Top";
 import Videos from "./Videos";
@@ -16,6 +17,7 @@ export default function LandingPage() {
   const [current, setCurrent] = useState(maindata[0]);
   const [showChat, setShowChat] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const today = new Date();
   const yesterday = new Date();
@@ -97,11 +99,26 @@ export default function LandingPage() {
         <Videos current={current} />
       </div>
       <div className="fixed z-30 flex justify-end p-3 bottom-20 w-96">
-        <img
-          className="w-16 cursor-pointer"
-          src={icn_btnAI}
-          onClick={() => setShowChat(true)}
-        />
+        <div className="flex flex-col items-end w-fit">
+          {isHovered && (
+            <div className="relative w-52">
+              <img src={img_textbox} />
+              <div className="absolute top-0 flex flex-col gap-1 px-4 py-3">
+                <div className="text-sm font-semibold">이음 재난 AI</div>
+                <div className="text-xs font-medium">
+                  재난 상황에서 발생하는 모든 궁금증에 대해 알아볼 수 있어요.
+                </div>
+              </div>
+            </div>
+          )}
+          <img
+            className="w-16 cursor-pointer"
+            src={icn_btnAI}
+            onClick={() => setShowChat(true)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          />
+        </div>
       </div>
       {showChat && (
         <div className="fixed z-50 w-96 h-[95%] bottom-0 animate-slideUp">
