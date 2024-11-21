@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import Article from "./Article";
 import Urgent from "./Urgent";
 import Detail from "./Detail";
+import Search from "./Search";
 
 interface Item {
   title: string;
@@ -21,6 +22,7 @@ export default function NewsPage() {
   const [articles, setArticles] = useState<Item[]>([]);
   const [detail, setDetail] = useState<Item>();
   const [showDetail, setShowDetail] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -96,20 +98,30 @@ export default function NewsPage() {
         <Header
           title="재난뉴스"
           button={
-            // showDetail ? null : (
-            //   <img
-            //     className="w-6 h-6 cursor-pointer"
-            //     alt="search"
-            //     src={icn_search}
-            //   />
-            // )
-            null
+            showDetail ? null : (
+              <img
+                className="w-6 h-6 cursor-pointer"
+                alt="search"
+                src={icn_search}
+                onClick={() => setShowSearch(true)}
+              />
+            )
           }
         />
       </div>
-      {showDetail && detail ? (
+      {showSearch && (
+        <Search
+          data={articles}
+          setShowSearch={setShowSearch}
+          formatText={formatText}
+          formatDate={formatDate}
+          funcSetDetail={funcSetDetail}
+        />
+      )}
+      {!showSearch && showDetail && detail && (
         <Detail data={detail} funcSetDetail={funcSetDetail} />
-      ) : (
+      )}
+      {!showSearch && (!showDetail || !detail) && (
         <div className="flex flex-col py-4 gap-11">
           {urgents && (
             <Urgent
