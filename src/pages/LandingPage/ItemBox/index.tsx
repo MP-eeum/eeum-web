@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import icn_snow from "../../../assets/icons/icn_snow.svg";
+import icn_itembox_sun from "../../../assets/icons/icn_itembox_sun.svg";
+import icn_itembox_rain from "../../../assets/icons/icn_itembox_rain.svg";
+import icn_itembox_snow from "../../../assets/icons/icn_itembox_snow.svg";
+import icn_itembox_default from "../../../assets/icons/icn_itembox_default.svg";
+
 import icn_back from "../../../assets/icons/icn_back.svg";
 import icn_next from "../../../assets/icons/icn_next.svg";
 
@@ -70,11 +74,26 @@ export default function ItemBox({ data }: Props) {
     if (input.length < 30) return input;
     return input.slice(0, 30) + "...";
   };
+
   const handleClick = () => {
     setIsClicked(true);
     setTimeout(() => {
       setIsClicked(false);
     }, 500);
+  };
+
+  const getWeatherIcon = (value: string) => {
+    if (value.includes("폭염")) return icn_itembox_sun;
+    else if (
+      value.includes("폭우") ||
+      value.includes("호우") ||
+      value.includes("장마") ||
+      value.includes("태풍")
+    )
+      return icn_itembox_rain;
+    else if (value.includes("폭설") || value.includes("대설"))
+      return icn_itembox_snow;
+    else return icn_itembox_default;
   };
 
   if (!pwn) return <div></div>;
@@ -104,7 +123,11 @@ export default function ItemBox({ data }: Props) {
                 <div className="text-sm text-textgray">{pwn[current].time}</div>
               </div>
               <div className="flex items-center gap-4 text-sm">
-                <img className="min-w-16" alt="weather-image" src={icn_snow} />
+                <img
+                  className="min-w-16"
+                  alt="weather-image"
+                  src={getWeatherIcon(pwn[current].title)}
+                />
                 <div className="flex flex-col max-w-3xl">
                   <div className="font-semibold">{pwn[current].title}</div>
                   <div className="text-textgray">
