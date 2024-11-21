@@ -23,7 +23,11 @@ export default function AirCondition({ data, today }: Props) {
 
   useEffect(() => {
     if (data.length === 0) return;
-    setState(data[0][`h${Math.floor(today.getHours() / 3) * 3}`]);
+    const hour =
+      Math.floor(today.getHours() / 3) !== 0
+        ? `h${Math.floor(today.getHours() / 3) * 3}`
+        : "h24";
+    setState(data[0][hour]);
   }, []);
 
   return (
