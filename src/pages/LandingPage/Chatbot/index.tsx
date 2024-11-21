@@ -51,7 +51,7 @@ export default function Chatbot({ setShowChat }: any) {
           Authorization: `Bearer ${process.env.REACT_APP_OPENAI}`,
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
+          model: "gpt-4o-mini",
           messages: [
             {
               role: "user",
