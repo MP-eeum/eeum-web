@@ -87,11 +87,11 @@ export default function Chatbot({ setShowChat }: any) {
       <div className="text-sm text-center text-textlight">
         {formatDate(day)}
       </div>
-      <div className="flex flex-col w-full gap-2 pb-4 mb-20 overflow-y-auto h-fit Chatbot">
+      <div className="flex flex-col w-full gap-4 py-4 mb-20 overflow-y-auto h-fit Chatbot">
         {chat.map((msg, index) => (
           <div
             key={index}
-            className={`w-full py-3 flex px-6 gap-2 justify-${index % 2 === 0 ? "start" : "end"}`}
+            className={`w-full flex px-6 gap-2 justify-${index % 2 === 0 ? "start" : "end"}`}
           >
             {index % 2 === 0 && (
               <img className="w-10 h-10" src={icn_btnAI_profile} />
@@ -100,11 +100,11 @@ export default function Chatbot({ setShowChat }: any) {
               className={`flex flex-col gap-2 text-sm items-${index % 2 === 0 ? "start" : "end"}`}
             >
               <MessageBox isRes={index % 2 === 0} message={msg} />
-              {index % 2 === 0 && (
-                <div className="flex flex-col gap-1">
+              {index === 0 && (
+                <div className="flex flex-col gap-2 pt-1">
                   {questions.map((item, index) => (
                     <div
-                      className="px-3 py-2 border cursor-pointer border-boxgray rounded-3xl hover:border-primary"
+                      className="px-3 py-2 text-sm font-medium border cursor-pointer border-boxgray rounded-3xl hover:bg-boxgray"
                       key={index}
                       onClick={() => {
                         handleOpenAIFunc(item);

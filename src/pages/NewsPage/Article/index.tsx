@@ -20,11 +20,9 @@ export default function Article({
   formatDate,
   funcSetDetail,
 }: Props) {
-  const today = new Date().toISOString().split("T")[0];
-
   return (
     <div className="mx-8">
-      <div>뉴스 살펴보기</div>
+      <div className="mb-4 font-semibold">뉴스 살펴보기</div>
       <div className="flex flex-col ">
         {data.map((item: any) => (
           <div key={item.link} onClick={() => funcSetDetail(item)}>

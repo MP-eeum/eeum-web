@@ -262,6 +262,7 @@ export default function DisasterPage() {
       map: map,
       icon: icn_currentLoc,
     });
+    mapRef.current = map;
     addMarkers(shelters, hospitals, map);
   };
 
@@ -307,14 +308,14 @@ export default function DisasterPage() {
       </div>
       <div className="absolute left-0 z-30 flex gap-2 px-4 py-6 text-sm font-medium w-fit top-10">
         <div
-          className={`flex items-center gap-1 px-3 py-1 shadow-lg cursor-pointer w-fit rounded-2xl ${showPlaces === "hospital" ? "bg-primary text-white" : "bg-white"}`}
+          className={`flex items-center gap-2 px-3 h-8 shadow-lg cursor-pointer w-fit rounded-2xl ${showPlaces === "hospital" ? "bg-primary text-white" : "bg-white"}`}
           onClick={() => handleBtnClick("hospital")}
         >
           <img src={icn_redcross} />
           <div className="w-fit text-nowrap">응급진료</div>
         </div>
         <div
-          className={`flex items-center gap-1 px-3 py-1 shadow-lg cursor-pointer w-fit rounded-2xl ${showPlaces === "shelter" ? "bg-primary text-white" : "bg-white"}`}
+          className={`flex items-center gap-1 px-3 h-8 shadow-lg cursor-pointer w-fit rounded-2xl ${showPlaces === "shelter" ? "bg-primary text-white" : "bg-white"}`}
           onClick={() => handleBtnClick("shelter")}
         >
           <img className="w-5 h-5 ml-[-0.1rem]" src={icn_shelter} />

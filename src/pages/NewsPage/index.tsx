@@ -32,10 +32,6 @@ export default function NewsPage() {
       data.filter(
         (item) => item.title.includes("속보") || item.title.includes("긴급")
       )
-      // .map((item) => ({
-      //   ...item,
-      //   title: item.title.replace(/^\[속보\]\s*/, ""),
-      // }))
     );
     setArticles(data.filter((item) => !item.title.includes("[속보]")));
   }, [data]);
@@ -70,9 +66,7 @@ export default function NewsPage() {
       .replace(/<b>/g, "")
       .replace(/<\/b>/g, "");
 
-    return transformed.length > 22
-      ? transformed.slice(0, 22) + " ···"
-      : transformed;
+    return transformed;
   };
 
   const formatDate = (input: string) => {
@@ -116,7 +110,7 @@ export default function NewsPage() {
       {showDetail && detail ? (
         <Detail data={detail} funcSetDetail={funcSetDetail} />
       ) : (
-        <div className="flex flex-col gap-5 py-4">
+        <div className="flex flex-col py-4 gap-11">
           {urgents && (
             <Urgent
               data={urgents}
