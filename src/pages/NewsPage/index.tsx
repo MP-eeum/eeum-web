@@ -92,6 +92,7 @@ export default function NewsPage() {
         </div>
       </div>
     );
+
   return (
     <div className="flex flex-col">
       <div className="h-12">
@@ -118,8 +119,10 @@ export default function NewsPage() {
           funcSetDetail={funcSetDetail}
         />
       )}
-      {!showSearch && showDetail && detail && (
-        <Detail data={detail} funcSetDetail={funcSetDetail} />
+      {showDetail && detail && (
+        <div className="fixed h-full bg-white w-96 top-12">
+          <Detail data={detail} setShowDetail={setShowDetail} />
+        </div>
       )}
       {!showSearch && (!showDetail || !detail) && (
         <div className="flex flex-col py-4 gap-11">

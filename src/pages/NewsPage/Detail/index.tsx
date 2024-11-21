@@ -10,10 +10,10 @@ interface Item {
 
 interface Props {
   data: Item;
-  funcSetDetail: (link: Item) => void;
+  setShowDetail: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function Detail({ data, funcSetDetail }: Props) {
-  const { title, description, link, originallink, pubDate } = data;
+export default function Detail({ data, setShowDetail }: Props) {
+  const { title, description, link, pubDate } = data;
 
   const formatText = (input: string) => {
     return input
@@ -28,13 +28,13 @@ export default function Detail({ data, funcSetDetail }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-5 mx-8 text-sm">
+    <div className="flex flex-col gap-5 mx-8 mt-4 text-sm">
       <div>
         <img
           className="cursor-pointer mx-[-0.5rem]"
           alt="<"
           src={icn_back}
-          onClick={() => funcSetDetail(data)}
+          onClick={() => setShowDetail(false)}
         />
       </div>
       <div className="flex flex-col gap-1 pb-4 border-b border-lightgray">

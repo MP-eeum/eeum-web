@@ -71,13 +71,12 @@ export default function Search({
           <p className="ml-1 text-primary">{filteredData.length}</p>건
         </div>
       )}
-      {filteredData.length > 0 ? (
+      {filteredData.length > 0 && (
         <div className="flex flex-col mx-8">
           {filteredData.map((item: any) => (
             <div
               key={item.link}
               onClick={() => {
-                setShowSearch(false);
                 funcSetDetail(item);
               }}
             >
@@ -88,7 +87,8 @@ export default function Search({
             </div>
           ))}
         </div>
-      ) : (
+      )}{" "}
+      {keyword !== "" && filteredData.length === 0 && (
         <div className="flex flex-col items-center my-52">
           <img src={icn_alert} />
           <div className="my-3">검색 결과가 없습니다.</div>
