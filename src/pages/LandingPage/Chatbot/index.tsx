@@ -34,6 +34,10 @@ export default function Chatbot({ setShowChat }: any) {
     setInput(e.target.value);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleOpenAIFunc(input);
+  };
+
   const handleOpenAIFunc = async (req: string) => {
     setInput("");
     setLoading(true);
@@ -130,6 +134,7 @@ export default function Chatbot({ setShowChat }: any) {
           placeholder="무엇이든 물어보세요."
           onChange={handleInput}
           value={input}
+          onKeyDown={handleKeyDown}
         />
         {input !== "" && (
           <img
