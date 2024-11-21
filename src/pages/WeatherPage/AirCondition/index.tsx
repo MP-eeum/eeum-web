@@ -12,7 +12,7 @@ interface Props {
 
 export default function AirCondition({ data, today }: Props) {
   const [state, setState] = useState<string>();
-  const [showInfo, setShowInfo] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const getAirState = (input: number) => {
     if (input < 26) return "낮음";
@@ -36,12 +36,13 @@ export default function AirCondition({ data, today }: Props) {
           <img
             className="w-4 opacity-50 cursor-pointer"
             src={icn_info}
-            onClick={() => setShowInfo(!showInfo)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           />
         </div>
       </div>
       <ProgressBar gauge={Number(state)} />
-      {showInfo && (
+      {isHovered && (
         <div className="absolute z-50 px-12 top-12">
           <div className="flex flex-col w-64 p-4 text-sm bg-white border rounded-md shadow-lg border-lightgray">
             <div className="font-medium">대기정체지수</div>
