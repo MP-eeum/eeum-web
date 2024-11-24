@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { maindata } from "../../../maindata";
+import { getCurrentLoc } from "../../../util";
 import img_sun from "../../../assets/images/img_sun.png";
 import img_moon from "../../../assets/images/img_moon.png";
 import img_cloud from "../../../assets/images/img_cloud.png";
@@ -108,7 +109,7 @@ export default function Top({
               {weather.temp}º
             </div>
             <div className="flex flex-col mb-2 text-xs font-extrabold">
-              <div>수원시 팔달구</div>
+              <div>{getCurrentLoc()}</div>
               <div>{weather.text}</div>
             </div>
           </div>

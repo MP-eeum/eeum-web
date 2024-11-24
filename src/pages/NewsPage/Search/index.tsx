@@ -66,7 +66,7 @@ export default function Search({
         </div>
       </div>
       {keyword !== "" && (
-        <div className="flex text-sm border-b border-[#C3C3C3] mx-8 my-5 pb-2 font-medium">
+        <div className="flex text-sm border-b border-[#C3C3C3] mx-8 mt-5 pb-2 font-medium">
           <p className="mr-1 text-primary">'{keyword}'</p> 검색 결과
           <p className="ml-1 text-primary">{filteredData.length}</p>건
         </div>
