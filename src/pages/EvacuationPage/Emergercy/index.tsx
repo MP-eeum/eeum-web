@@ -18,14 +18,14 @@ const EmergencyButton: React.FC<EmergencyButtonProps> = ({
   return (
     <button
       onClick={handleClick}
-      className="flex items-center w-full p-4 mb-8 transition-colors bg-white shadow-md rounded-2xl hover:bg-gray-50 active:bg-gray-100"
+      className="flex items-center w-full p-4 mb-8 transition-colors bg-white rounded-2xl hover:bg-gray-50 active:bg-gray-100 shadow-[0_0_10px_5px_rgba(0,0,0,0.05)]"
     >
       <div className="bg-[#2E5F4B] w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-medium shrink-0">
         {number}
       </div>
       <div className="flex flex-col items-start ml-4">
-        <span className="text-lg font-semibold">{title}</span>
-        <span className="text-sm text-gray-600">{description}</span>
+        <span className="text-md font-semibold mb-1">{title}</span>
+        <span className="text-sm text-textgray">{description}</span>
       </div>
     </button>
   );
@@ -40,7 +40,7 @@ const Emergency = () => {
     },
     {
       number: "119",
-      title: "안전신고센터",
+      title: "119 안전신고센터",
       description: "화재·구조·구급·재난신고",
     },
     {

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { PulseLoader } from "react-spinners";
 import icn_search from "../../assets/icons/icn_search.svg";
 import Header from "../../components/Header";
 import Article from "./Article";
 import Urgent from "./Urgent";
 import Detail from "./Detail";
+import Search from "./Search";
 
 interface Item {
   title: string;
@@ -20,6 +22,8 @@ export default function NewsPage() {
   const [articles, setArticles] = useState<Item[]>([]);
   const [detail, setDetail] = useState<Item>();
   const [showDetail, setShowDetail] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getNewsData();
@@ -30,10 +34,6 @@ export default function NewsPage() {
       data.filter(
         (item) => item.title.includes("속보") || item.title.includes("긴급")
       )
-      // .map((item) => ({
-      //   ...item,
-      //   title: item.title.replace(/^\[속보\]\s*/, ""),
-      // }))
     );
     setArticles(data.filter((item) => !item.title.includes("[속보]")));
   }, [data]);
@@ -51,9 +51,15 @@ export default function NewsPage() {
         display: 100,
       },
     };
-
-    const res = await axios.get(url, options);
-    setData(res.data.items);
+    setLoading(true);
+    try {
+      const res = await axios.get(url, options);
+      setData(res.data.items);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formatText = (input: string) => {
@@ -62,9 +68,7 @@ export default function NewsPage() {
       .replace(/<b>/g, "")
       .replace(/<\/b>/g, "");
 
-    return transformed.length > 22
-      ? transformed.slice(0, 22) + " ···"
-      : transformed;
+    return transformed;
   };
 
   const formatDate = (input: string) => {
@@ -77,27 +81,51 @@ export default function NewsPage() {
     setDetail(input);
   };
 
+  if (loading)
+    return (
+      <div className="flex flex-col w-full h-full">
+        <div className="h-12">
+          <Header title="재난뉴스" button={null} />
+        </div>
+        <div className="flex items-center justify-center w-full h-full">
+          <PulseLoader color="#396951" size="10px" />
+        </div>
+      </div>
+    );
+
   return (
     <div className="flex flex-col">
       <div className="h-12">
         <Header
           title="재난뉴스"
           button={
-            // showDetail ? null : (
-            //   <img
-            //     className="w-6 h-6 cursor-pointer"
-            //     alt="search"
-            //     src={icn_search}
-            //   />
-            // )
-            null
+            showDetail ? null : (
+              <img
+                className="w-6 h-6 cursor-pointer"
+                alt="search"
+                src={icn_search}
+                onClick={() => setShowSearch(true)}
+              />
+            )
           }
         />
       </div>
-      {showDetail && detail ? (
-        <Detail data={detail} funcSetDetail={funcSetDetail} />
-      ) : (
-        <div className="flex flex-col gap-5 py-4">
+      {showSearch && (
+        <Search
+          data={articles}
+          setShowSearch={setShowSearch}
+          formatText={formatText}
+          formatDate={formatDate}
+          funcSetDetail={funcSetDetail}
+        />
+      )}
+      {showDetail && detail && (
+        <div className="fixed h-full bg-white w-96 top-12">
+          <Detail data={detail} setShowDetail={setShowDetail} />
+        </div>
+      )}
+      {!showSearch && (!showDetail || !detail) && (
+        <div className="flex flex-col py-4 gap-11">
           {urgents && (
             <Urgent
               data={urgents}

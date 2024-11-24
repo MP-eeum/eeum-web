@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { PulseLoader } from "react-spinners";
 import Header from "../../components/Header";
 import DayOverview from "./DayOverview";
 import CurrentWeather from "./CurrentWeather";
@@ -127,7 +128,16 @@ export default function WeatherPage() {
       weekTemp.length ===
     0
   )
-    return <div>loading</div>;
+    return (
+      <div className="flex flex-col w-full h-full">
+        <div className="h-12">
+          <Header title="기상정보" button={null} />
+        </div>
+        <div className="flex items-center justify-center w-full h-full">
+          <PulseLoader color="#396951" size="10px" />
+        </div>
+      </div>
+    );
   return (
     <div className="flex flex-col w-full pb-8">
       <div className="h-12">

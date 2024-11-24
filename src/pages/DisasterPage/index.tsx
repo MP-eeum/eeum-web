@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import icn_btnTarget from "../../assets/icons/icn_btnTarget.png";
 import icn_redcross from "../../assets/icons/icn_redcross.svg";
 import icn_shelter from "../../assets/icons/icn_shelter.png";
 import icn_currentLoc from "../../assets/icons/icn_currentLoc.svg";
+import icn_closeGreen from "../../assets/icons/icn_closeGreen.png";
 import Header from "../../components/Header";
 import CustomMarker from "./CustomMarker";
 
 export default function DisasterPage() {
-  const mapRef = useRef<HTMLDivElement | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<naver.maps.Map | null>(null);
   let map: naver.maps.Map;
 
   const [currentLoc, setCurrentLoc] = useState({ x: 0, y: 0 });
@@ -37,7 +40,7 @@ export default function DisasterPage() {
     });
     if (map !== undefined) return;
     const { naver } = window;
-    if (!mapRef.current || !naver) return;
+    if (!mapContainerRef.current || !naver) return;
     const mapOptions = {
       center: new naver.maps.LatLng(y, x),
       zoom: 16,
@@ -49,6 +52,8 @@ export default function DisasterPage() {
       map: map,
       icon: icn_currentLoc,
     });
+
+    mapRef.current = map;
     getSheltersFunc().then((s) =>
       getHospitalsFunc().then((h) => addMarkers(s, h, map))
     );
@@ -217,8 +222,8 @@ export default function DisasterPage() {
       const path = res.data.route.trafast[0].path;
       var polyline = new naver.maps.Polyline({
         path: path,
-        strokeColor: "#FF0000",
-        strokeOpacity: 0.75,
+        strokeColor: "#396951",
+        strokeOpacity: 1,
         strokeWeight: 5,
         map: newMap,
       });
@@ -257,6 +262,7 @@ export default function DisasterPage() {
       map: map,
       icon: icn_currentLoc,
     });
+    mapRef.current = map;
     addMarkers(shelters, hospitals, map);
   };
 
@@ -275,12 +281,11 @@ export default function DisasterPage() {
         >
           대피소 길찾기
         </div>
-        <div
-          className="absolute cursor-pointer top-2 right-5"
+        <img
+          className="absolute w-4 cursor-pointer top-3 right-4"
+          src={icn_closeGreen}
           onClick={() => closePath()}
-        >
-          x
-        </div>
+        />
       </div>
     );
   };
@@ -291,28 +296,46 @@ export default function DisasterPage() {
     else setShowPlaces(btn);
   };
 
+  const handleMakeCenter = () => {
+    var center = new naver.maps.Point(currentLoc.x, currentLoc.y);
+    if (mapRef.current) mapRef.current.setCenter(new naver.maps.LatLng(center));
+  };
+
   return (
     <div className="relative flex flex-col w-full h-full">
       <div className="h-12">
         <Header title="긴급상황" button={null} />
       </div>
-      <div className="absolute left-0 z-30 flex w-full gap-3 m-2 text-sm top-12">
+      <div className="absolute left-0 z-30 flex gap-2 px-4 py-6 text-sm font-medium w-fit top-10">
         <div
-          className={`flex items-center gap-1 px-2 py-1 shadow-lg cursor-pointer w-fit rounded-xl ${showPlaces === "hospital" ? "bg-primary text-white" : "bg-white"}`}
+          className={`flex items-center gap-2 px-3 h-8 shadow-lg cursor-pointer w-fit rounded-2xl ${showPlaces === "hospital" ? "bg-primary text-white" : "bg-white"}`}
           onClick={() => handleBtnClick("hospital")}
         >
           <img src={icn_redcross} />
           <div className="w-fit text-nowrap">응급진료</div>
         </div>
         <div
-          className={`flex items-center gap-1 px-2 py-1 shadow-lg cursor-pointer w-fit rounded-xl ${showPlaces === "shelter" ? "bg-primary text-white" : "bg-white"}`}
+          className={`flex items-center gap-1 px-3 h-8 shadow-lg cursor-pointer w-fit rounded-2xl ${showPlaces === "shelter" ? "bg-primary text-white" : "bg-white"}`}
           onClick={() => handleBtnClick("shelter")}
         >
-          <img src={icn_shelter} />
+          <img className="w-5 h-5 ml-[-0.1rem]" src={icn_shelter} />
           <p>대피소</p>
         </div>
       </div>
-      <div id="map" className="z-20 flex-1 w-full bg-lightgray" ref={mapRef} />
+      <div
+        className={`fixed z-30 flex justify-end px-3 bottom-20 w-96 ${showPath && seletedItem ? "pb-56" : "pb-6"}`}
+      >
+        <img
+          className="cursor-pointer w-11"
+          src={icn_btnTarget}
+          onClick={() => handleMakeCenter()}
+        />
+      </div>
+      <div
+        id="map"
+        className="z-20 flex-1 w-full bg-lightgray"
+        ref={mapContainerRef}
+      />
       {showPath && seletedItem && (
         <div className="absolute bottom-0 z-30 w-full animate-slideUp">
           {getMarkerInfo(seletedItem)}

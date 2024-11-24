@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getCurrentLoc } from "../../../util";
 import img_sun from "../../../assets/images/img_sun.png";
 import img_moon from "../../../assets/images/img_moon.png";
 import img_cloud from "../../../assets/images/img_cloud.png";
@@ -44,14 +45,14 @@ export default function CurrentWeather({ data, today, formatDate }: Props) {
     if (pty === "1" || pty === "4") return img_rain;
     else if (pty === "3") return img_snow;
     else if (sky > "5") return img_cloud;
-    else if (time > "6" && time < "18") return img_sun;
+    else if (Number(time) > 600 && Number(time) < 1800) return img_sun;
     return img_moon;
   };
 
   return (
     <div className="flex flex-col items-center gap-2 my-8">
       <img className="w-28" alt="img_weather" src={getWeatherIcon()} />
-      <div className="text-lg font-semibold">수원시 팔달구</div>
+      <div className="text-lg font-semibold">{getCurrentLoc()}</div>
       <div className="text-5xl">{weather.temp}º</div>
     </div>
   );

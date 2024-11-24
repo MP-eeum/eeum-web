@@ -6,6 +6,7 @@ module.exports = {
       animation: {
         slideUp: "slideUp 300ms ease-in-out forwards",
         slideDown: "slideDown 300ms ease-in-out forwards",
+        opacity: "opacity 500ms ease-in-out forwards",
       },
       keyframes: {
         slideUp: {
@@ -15,6 +16,10 @@ module.exports = {
         slideDown: {
           "0%": { transform: "translateY(0)", opacity: "1" },
           "100%": { transform: "translateY(100%)", opacity: "0" },
+        },
+        opacity: {
+          "0%": { opacity: "0.25" },
+          "100%": { opacity: "1" },
         },
       },
     },

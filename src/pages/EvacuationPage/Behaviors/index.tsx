@@ -147,14 +147,14 @@ export default function Behaviors() {
       rel="noopener noreferrer"
       className="flex flex-col items-center transition-opacity hover:opacity-80"
     >
-      <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gray-50">
+      <div className="flex items-center justify-center w-18 h-18 mb-4 rounded-full bg-gray-50">
         <img
           src={item.imageUrl}
           alt={item.title}
-          className="object-contain w-14 h-14"
+          className="object-contain w-16 h-16"
         />
       </div>
-      <span className="text-xs text-gray-900">{item.title}</span>
+      <span className="text-sm text-gray-900 whitespace-nowrap">{item.title}</span>
     </a>
   );
 
@@ -162,7 +162,7 @@ export default function Behaviors() {
     <div className="w-10/12 mx-auto mb-8 bg-white">
       <div className="px-1 py-4">
         <h2 className="text-base mb-4 px-0.5">자연재난</h2>
-        <div className="grid grid-cols-4 gap-x-1 gap-y-6">
+        <div className="grid grid-cols-4 gap-x-6 gap-y-4">
           {naturalDisasters.map((item) => (
             <DisasterItem key={item.id} item={item} />
           ))}
@@ -171,7 +171,7 @@ export default function Behaviors() {
 
       <div className="px-1 py-4">
         <h2 className="text-base mb-4 px-0.5">사회재난</h2>
-        <div className="grid grid-cols-4 gap-x-1 gap-y-6">
+        <div className="grid grid-cols-4 gap-x-6 gap-y-4">
           {socialDisasters.map((item) => (
             <DisasterItem key={item.id} item={item} />
           ))}

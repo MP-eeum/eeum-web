@@ -48,25 +48,29 @@ export default function Hourly({ data, today }: Props) {
     if (pty === "1" || pty === "4") return icn_rain;
     else if (pty === "3") return icn_snow;
     else if (sky > "5") return icn_cloud;
-    else if (time > "6" && time < "18") return icn_sun;
+    else if (Number(time) > 6 && Number(time) < 18) return icn_sun;
     return icn_moon;
   };
 
   return (
-    <div className="flex w-full gap-1 px-5 py-4 border rounded-lg border-lightgray ">
-      {hourlyData.map((item, index) => (
-        <div
-          key={index}
-          className="flex flex-col items-center justify-center gap-1 min-w-12"
-        >
-          <div>{item.fcstTime}시</div>
-          <img
-            alt="weather-icon"
-            src={getWeatherIcon(item.fcstTime, item.sky, item.pty)}
-          />
-          <div>{item.temp}º</div>
+    <div className="border rounded-lg border-lightgray">
+      <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex gap-1 pl-2 pr-2 py-4">
+          {hourlyData.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center gap-1 min-w-12"
+            >
+              <div>{item.fcstTime}시</div>
+              <img
+                alt="weather-icon"
+                src={getWeatherIcon(item.fcstTime, item.sky, item.pty)}
+              />
+              <div>{item.temp}º</div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }
