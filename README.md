@@ -1,6 +1,11 @@
 # 이음
 2024-09 - 2024.12 (3人 팀 프로젝트)
-
+![Image](https://github.com/user-attachments/assets/dab2d031-5d45-4bb8-9a9c-82630009ec1c)
+![Image](https://github.com/user-attachments/assets/37fa47b9-9178-407e-bdd7-da4140aac359)
+![Image](https://github.com/user-attachments/assets/eb1fdd61-2a84-4ee3-baea-4cf3871df1f0)
+![Image](https://github.com/user-attachments/assets/c9785223-fff4-4520-ba17-c037f70c39f0)
+![Image](https://github.com/user-attachments/assets/b860fce2-14f5-4e8e-b047-5874c5f74247)
+![Image](https://github.com/user-attachments/assets/2a1a8428-88dd-4fb7-8d31-a1bb10c2116b)
 
 
 
